@@ -1360,27 +1360,36 @@
 
     <!-- ===== 手機標籤切換腳本 ===== -->
     <script>
-        function switchDay(dayNum) {
-            // 切換按鈕狀態
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach((btn, index) => {
-                if (index === (dayNum - 1)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
+    // 1. 點擊按鈕平滑滑動到指定 Day
+    function switchDay(dayNum) {
+        const targetDay = document.getElementById(`day-${dayNum}`);
+        if (targetDay) {
+            targetDay.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        }
+    }
 
-            // 切換行程內容
-            const schedules = document.querySelectorAll('.day-schedule');
-            schedules.forEach((sch, index) => {
-                if (index === (dayNum - 1)) {
-                    sch.classList.add('active');
-                } else {
-                    sch.classList.remove('active');
-                }
+    // 2. 手指左右滑動行程時，自動更新上方按鈕高亮
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileView = document.querySelector('.mobile-view');
+        const schedules = document.querySelectorAll('.day-schedule');
+        const buttons = document.querySelectorAll('.tab-btn');
+
+        if (mobileView) {
+            mobileView.addEventListener('scroll', () => {
+                const scrollLeft = mobileView.scrollLeft;
+                const width = mobileView.offsetWidth;
+                const currentIndex = Math.round(scrollLeft / width);
+
+                buttons.forEach((btn, idx) => {
+                    if (idx === currentIndex) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
             });
         }
-    </script>
+    });
+</script>
 </body>
 </html>
