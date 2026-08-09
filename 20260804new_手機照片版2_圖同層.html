@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="no-referrer">
+    <!-- Images are routed through images.weserv.nl for reliable mobile display. -->
+    <title>釜山 6天5夜自由行行程總表 (Apple Maps 版)</title>
+    <style>
+        :root {
+            --primary: #0077b6;
+            --header-bg: #03045e;
+            --border-color: #dcdfe6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--header-bg);
+        }
+
+        .header-title h1 {
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+
+        .header-title p {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            min-width: 1200px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            vertical-align: top;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: #ffffff;
+            text-align: center;
+            font-size: 1.05rem;
+            padding: 12px 5px;
+        }
+
+        th.time-col {
+            width: 80px;
+            background-color: var(--header-bg);
+        }
+
+        .time-cell {
+            font-weight: bold;
+            text-align: center;
+            background-color: #eef4f8;
+            color: var(--header-bg);
+            vertical-align: middle;
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+            margin-bottom: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #1a252c;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .card-links {
+            display: flex;
+            gap: 5px;
+            font-size: 0.75rem;
+        }
+
+        .card-links a {
+            color: #0070c9;
+            text-decoration: none;
+            background: #e8f2fc;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .card-links a:hover {
+            background: #d0e4f7;
+        }
+
+        .bg-region {
+            background-color: #e0f2fe;
+            text-align: center;
+            font-weight: bold;
+            color: #0369a1;
+            padding: 6px;
+            font-size: 0.9rem;
+        }
+
+
+        /* ===== 1408×768 一頁版：保留原內容，只縮小卡片與圖片 ===== */
+        @media print {
+            @page { size: 1408px 768px; margin: 0; }
+            html, body { width: 1408px; height: 768px; overflow: hidden; }
+            body { padding: 10px; background: #fff; }
+            .header-title { margin-bottom: 7px; }
+            .header-title h1 { font-size: 25px; letter-spacing: 0.5px; }
+            .header-title p { font-size: 12px; margin-top: 2px; }
+            .table-container { width: 100%; height: 705px; overflow: hidden; padding: 5px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+            table { width: 100%; min-width: 0; height: 100%; table-layout: fixed; }
+            th, td { padding: 3px; }
+            th { font-size: 12px; padding: 6px 3px; }
+            th.time-col { width: 64px; }
+            .time-cell { font-size: 11px; }
+            .bg-region { padding: 3px; font-size: 10px; }
+            .card { padding: 3px; margin-bottom: 2px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+            .card-img { height: 38px; margin-bottom: 2px; border-radius: 4px; }
+            .card-title { font-size: 9px; margin-bottom: 2px; line-height: 1.12; }
+            .card-links { gap: 2px; font-size: 7px; }
+            .card-links a { padding: 1px 4px; font-size: 7px; border-radius: 3px; }
+            .card:hover { transform: none; }
+        }
+
+        /* 手機：維持卡片可讀性，以左右滑動瀏覽六天 */
+        @media screen and (max-width: 700px) {
+            html { background: #f4f6f9; }
+            body { padding: 8px; width: 100%; overflow-x: hidden; }
+            .header-title { margin-bottom: 10px; }
+            .header-title h1 { font-size: 1.35rem; }
+            .header-title p { font-size: .72rem; line-height: 1.35; }
+            .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 5px; }
+            table { min-width: 1200px; }
+            .card-img { display: block; width: 100%; height: 90px; object-fit: cover; }
+            img { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">
+        <h1>🇰🇷 釜山 6天5夜自由行行程總表</h1>
+        <p>出發日期：2026.08.23 ～ 2026.08.28｜一頁式網格與 Apple Maps 直達連結</p>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="time-col">時間</th>
+                    <th>Day 1 (8/23 日)</th>
+                    <th>Day 2 (8/24 一)</th>
+                    <th>Day 3 (8/25 二)</th>
+                    <th>Day 4 (8/26 三)</th>
+                    <th>Day 5 (8/27 四)</th>
+                    <th>Day 6 (8/28 五)</th>
+                </tr>
+                <tr>
+                    <td class="time-cell">區域</td>
+                    <td class="bg-region">海雲台</td>
+                    <td class="bg-region">海雲台</td>
+                    <td class="bg-region">西面</td>
+                    <td class="bg-region">西面</td>
+                    <td class="bg-region">西面</td>
+                    <td class="bg-region"></td>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 09:00 -->
+                <tr>
+                    <td class="time-cell">09:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="大海鮑魚粥.jpg" alt="大海鮑魚粥">
+                            <div class="card-title">Breakfast (大海鮑魚粥)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=大海鮑魚粥+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="自然鹽麵包.jpg" alt="自然鹽麵包">
+                            <div class="card-title">Breakfast (自然鹽麵包)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=自然鹽麵包+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="松亭3代豬肉湯飯.jpg" alt="松亭3代豬肉湯飯">
+                            <div class="card-title">Breakfast 松亭3代豬肉湯飯</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=松亭3代豬肉湯飯" target="_blank">📍 Apple Maps</a></div>
+                            <img class="card-img" src="秀英本家.jpg">
+                            <div class="card-title">秀英本家</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=秀英本家" target="_blank">📍 Apple Maps</a></div>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Breakfast EGG DROP (西面樂天後門店).jpg" alt="EGG DROP">
+                            <div class="card-title">Breakfast EGG DROP (西面樂天後門店)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=EGG+DROP+西面樂天店" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Brunch (Your Type Jeonpo).jpg" alt="Your Type Jeonpo">
+                            <div class="card-title">Brunch (Your Type Jeonpo)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=Your+Type+Jeonpo" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 10:00 -->
+                <tr>
+                    <td class="time-cell">10:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="海岸列車.jpg" alt="海岸列車">
+                            <div class="card-title">搭海岸列車 (尾浦 to 松亭站)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=海雲台藍線公園+尾浦站" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="沙灘玩水.jpg" alt="沙灘玩水">
+                            <div class="card-title">沙灘玩水 (備野餐墊)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=海雲台海水浴場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="韓服體驗.jpg" alt="韓服體驗">
+                            <div class="card-title">哲秀和英熙韓服店</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=哲秀和英熙韓服店" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="ARTE MUSEUM Busan.jpg" alt="ARTE MUSEUM Busan">
+                            <div class="card-title">ARTE MUSEUM Busan</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=ARTE+MUSEUM+Busan" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- 11:00 -->
+                <tr>
+                    <td class="time-cell">11:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Skyline Luge.jpg" alt="Skyline Luge">
+                            <div class="card-title">Take Uber 10min ➔ Skyline Luge Busan</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=Skyline+Luge+Busan" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Hotel Check-out (海雲台).jpg" alt="Hotel Check-out">
+                            <div class="card-title">Hotel Check-out (海雲台)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=UH+SUITE+THE+HAEUNDAE" target="_blank">📍 Apple Maps</a></div>
+
+                            <img class="card-img" src="汗蒸幕 (Club D Oasis).jpg" alt="Club D Oasis 汗蒸幕">
+                            <div class="card-title">汗蒸幕 (Club D Oasis)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=클럽디오아시스" target="_blank">📍 Apple Maps</a></div>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="甘川洞文化村.jpg" alt="甘川洞文化村">
+                            <div class="card-title">甘川洞文化村</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=甘川洞文化村" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Hotel Check-out (西面).jpg" alt="Hotel Check-out">
+                            <div class="card-title">Hotel Check-out (西面)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=西面站+釜山" target="_blank">📍 Apple Maps</a></div>
+                            <img class="card-img" src="The OLD MONT Bagel.jpg" alt="The OLD MONT Bagel">
+                            <div class="card-title">The OLD MONT Bagel</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=The+OLD+MONT+Bagel+Busan" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 12:00 -->
+                <tr>
+                    <td class="time-cell">12:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="海東龍宮寺.jpg" alt="海東龍宮寺">
+                            <div class="card-title">海東龍宮寺</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=海東龍宮寺" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="手翻書.jpg" alt="手翻書">
+                            <div class="card-title">釜山手翻書</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=釜山手翻書" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <img class="card-img" src="Burger Yo.jpg" alt="Burger Yo">
+                        <div class="card-title">Lunch Burger Yo</div>
+                        <div class="card-links"><a href="http://maps.apple.com/?q=버거요+부산" target="_blank">📍 Apple Maps</a></div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="人蔘雞湯.jpg" alt="人蔘雞湯">
+                            <div class="card-title">Lunch 三五亭人蔘雞湯</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=三五亭人蔘雞湯" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 13:00 -->
+                <tr>
+                    <td class="time-cell">13:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="海鮮刀切麵.jpg" alt="海鮮刀切麵">
+                            <div class="card-title">Lunch (海雲台31公分海鮮刀切麵)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=海雲台31公分海鮮刀切麵" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="海底貝殼王國（松島）.jpg" alt="海底貝殼王國（松島）">
+                            <div class="card-title">Take Uber 15min ➔ Lunch 海底貝殼王國（松島）</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=해저조개왕국" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+                <!-- 14:00 -->
+                <tr>
+                    <td class="time-cell">14:00</td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="桃園機場.jpg" alt="桃園機場">
+                            <div class="card-title">🛫 桃園出發 (14:40)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=桃園國際機場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="平交道.jpg" alt="平交道">
+                            <div class="card-title">青沙浦站灌籃高手平交道</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=青沙浦平交道" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="貝殼.jpg" alt="貝殼">
+                            <div class="card-title">Lunch 海底貝殼王國（松島）</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=海底貝殼王國+松島" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- 15:00 -->
+                <tr>
+                    <td class="time-cell">15:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="DIART COFFEE.jpg" alt="DIART COFFEE">
+                            <div class="card-title">DIART COFFEE (蜂蜜奶油法棍)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=DIART+COFFEE+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Hotel Check-in (西面).jpg" alt="Hotel Check-in">
+                            <div class="card-title">Hotel Check-in (西面)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=西面站+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="白淺灘文化村.jpg" alt="白淺灘文化村">
+                            <div class="card-title">白淺灘文化村</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=白淺灘文化村" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="金海機場.jpg" alt="金海機場">
+                            <div class="card-title">🛬 Arrive Busan Airport</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=金海國際機場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 16:00 -->
+                <tr>
+                    <td class="time-cell">16:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="天空膠囊列車.jpg" alt="天空膠囊列車">
+                            <div class="card-title">膠囊列車（青沙浦 to 尾浦)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=青沙浦站+藍線公園" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="味贊王 (韓式燒烤).jpg" alt="韓式燒烤">
+                            <div class="card-title">Dinner 味贊王 (韓式燒烤)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=味贊王鹽烤肉+西面店" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="EL16.52 海景咖啡廳.jpg" alt="EL16.52">
+                            <div class="card-title">EL16.52 海景咖啡廳</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=EL16.52" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Miffy Cafe Busan(Mipi) in 影島.jpg" alt="Miffy Cafe">
+                            <div class="card-title">Miffy Cafe Busan(Mipi) in 影島</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=Miffy+Cafe+Busan" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- 17:00 -->
+                <tr>
+                    <td class="time-cell">17:00</td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="BUSAN X the SKY.jpg" alt="BUSAN X the SKY">
+                            <div class="card-title">BUSAN X the SKY</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=BUSAN+X+the+SKY" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="松島海上纜車.jpg" alt="松島纜車">
+                            <div class="card-title">松島海上纜車</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=松島海上纜車" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="明星一隻雞 in 影島.jpg" alt="一隻雞">
+                            <div class="card-title">Dinner 明星一隻雞 in 影島</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=明星一隻雞+影島" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- 18:00 -->
+                <tr>
+                    <td class="time-cell">18:00</td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="釜山機場.jpg" alt="釜山機場">
+                            <div class="card-title">🛬 抵達釜山 (18:00)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=金海國際機場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="海雲台市場.jpg" alt="海雲台市場">
+                            <div class="card-title">Dinner (海雲台傳統市場)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=海雲台傳統市場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="西面 Shopping.jpg" alt="西面 Shopping">
+                            <div class="card-title">西面 Shopping</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=西面地下街" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- 19:00 -->
+                <tr>
+                    <td class="time-cell">19:00</td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="UH SUITE.jpg" alt="UH SUITE">
+                            <div class="card-title">海雲台 Check-in (UH SUITE THE HAEUNDAE)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=UH+SUITE+THE+HAEUNDAE" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Yacht holic or 鑽石遊艇之旅 (廣安里碼頭).jpg" alt="遊艇">
+                            <div class="card-title">Yacht holic or 鑽石遊艇之旅 (廣安里碼頭)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=Yacht+holic+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="83獬豸.jpg" alt="83獬豸">
+                            <div class="card-title">Dinner 83獬豸 (西面總店)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=83獬豸+西面" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="釜山塔 (龍頭山公園).jpg" alt="釜山塔">
+                            <div class="card-title">釜山塔 (龍頭山公園)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=釜山塔" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="起飛.jpg" alt="起飛">
+                            <div class="card-title">🛫 釜山起飛 (19:10)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=金海國際機場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 20:00 -->
+                <tr>
+                    <td class="time-cell">20:00</td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="廣安木.jpg" alt="廣安木">
+                            <div class="card-title">Dinner 廣安木 (韓式烤肉) or Jinwoorin Haejang</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=廣安木+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="樂天百貨.jpg" alt="樂天百貨">
+                            <div class="card-title">樂天百貨</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=樂天百貨+西面店" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- 21:00 -->
+                <tr>
+                    <td class="time-cell">21:00</td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="The Bay 101.jpg" alt="The Bay 101">
+                            <div class="card-title">The Bay 101</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=The+Bay+101+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                    <div class="card">
+                            <img class="card-img" src="海雲台大創店 Daiso.jpg" alt="海雲台大創店 Daiso">
+                            <div class="card-title">海雲台大創店 Daiso</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=다이소+해운대점" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="樂天超市.jpg" alt="樂天超市">
+                            <div class="card-title">樂天超市 Lotte Mart</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=Lotte+Mart+釜山" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="抵達台灣.jpg" alt="抵達台灣">
+                            <div class="card-title">🛬 抵達台灣桃園機場 (20:35)</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=桃園國際機場" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- 22:00 -->
+                <tr>
+                    <td class="time-cell">22:00</td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="Emart.jpg" alt="Emart">
+                            <div class="card-title">海雲台 E-mart</div>
+                            <div class="card-links"><a href="http://maps.apple.com/?q=E-mart+海雲台店" target="_blank">📍 Apple Maps</a></div>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div class="card">
+                            <img class="card-img" src="溫馨的家.jpg" alt="Home">
+                            <div class="card-title">🏠 平安回到溫馨的家</div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
