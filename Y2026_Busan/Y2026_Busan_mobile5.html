@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="referrer" content="no-referrer">
-    <title>釜山 6天5夜自由行行程總表 (Apple Maps 版)</title>
+    <title>釜山 6天5夜自由行行程總表</title>
     <style>
         :root {
             --primary: #0077b6;
@@ -13,22 +13,18 @@
             --bg-light: #f4f6f9;
 
             /* ===== 行程類別底色與文字顏色定義 ===== */
-            /* 1. 餐飲 Food (黃/橘色系) */
             --cat-food-bg: #fef3c7;
             --cat-food-text: #92400e;
             --cat-food-border: #fde68a;
 
-            /* 2. 景點 Spot (水藍/青色系) */
             --cat-spot-bg: #e0f2fe;
             --cat-spot-text: #075985;
             --cat-spot-border: #bae6fd;
 
-            /* 3. 購物與體驗 Shopping (淡紫/粉紫色系) */
             --cat-shop-bg: #f3e8ff;
             --cat-shop-text: #6b21a8;
             --cat-shop-border: #e9d5ff;
 
-            /* 4. 交通與住宿 Logistics (薄荷綠色系) */
             --cat-logistics-bg: #dcfce7;
             --cat-logistics-text: #166534;
             --cat-logistics-border: #bbf7d0;
@@ -62,6 +58,52 @@
             color: #666;
             font-size: 0.9rem;
             margin-top: 4px;
+        }
+
+        /* ===== 地圖切換按鈕區塊 ===== */
+        .map-selector-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .map-selector-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .map-btn {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background-color: #f0f0f0;
+            color: #666;
+        }
+
+        .map-btn.active-gmap {
+            background-color: #4285F4;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(66, 133, 244, 0.4);
+        }
+
+        .map-btn.active-amap {
+            background-color: #000000;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
         }
 
         /* ===== 圖例 Legend ===== */
@@ -164,7 +206,7 @@
             font-size: 0.85rem;
         }
 
-        /* ===== 精簡總覽表卡片與色彩語彙套用 ===== */
+        /* ===== 精簡總覽表卡片 ===== */
         .summary-item {
             padding: 3px 5px;
             margin-bottom: 3px;
@@ -182,7 +224,6 @@
             flex-shrink: 0;
         }
 
-        /* 類別套色：精簡總覽表 */
         .cat-food {
             background-color: var(--cat-food-bg);
             color: var(--cat-food-text);
@@ -308,7 +349,6 @@
                 border: 1px solid var(--border-color);
             }
 
-            /* 類別套色：手機卡片背景與邊框 */
             .mobile-card.cat-food {
                 background-color: var(--cat-food-bg);
                 border-color: var(--cat-food-border);
@@ -350,14 +390,15 @@
 
             .mobile-card .card-links a {
                 font-size: 0.75rem;
-                padding: 4px 10px;
+                padding: 5px 12px;
                 text-decoration: none;
                 background: #ffffff;
-                color: #0070c9;
+                color: #333;
                 border-radius: 4px;
                 font-weight: bold;
                 display: inline-block;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+                transition: all 0.2s;
             }
         }
     </style>
@@ -366,7 +407,14 @@
 
     <div class="header-title">
         <h1>🇰🇷 釜山 6天5夜自由行行程總表</h1>
-        <p>出發日期：2026.08.23 ～ 2026.08.28｜全色彩視覺化管理</p>
+        <p>出發日期：2026.08.23 ～ 2026.08.28｜地圖導航雙模式</p>
+    </div>
+
+    <!-- ===== 地圖切換按鈕區塊 ===== -->
+    <div class="map-selector-container">
+        <span class="map-selector-label">🗺️ 地圖切換：</span>
+        <button id="btn-gmap" class="map-btn active-gmap" onclick="setMapProvider('gmap')">Google Maps</button>
+        <button id="btn-amap" class="map-btn" onclick="setMapProvider('amap')">Apple Maps</button>
     </div>
 
     <!-- 圖例與標籤說明 -->
@@ -538,7 +586,7 @@
                     <div class="mobile-card cat-logistics">
                         <img src="images/桃園機場.jpg" alt="桃園機場">
                         <div class="card-title">🛫 桃園出發 (14:40)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=桃園國際機場" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="桃園國際機場" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -548,7 +596,7 @@
                     <div class="mobile-card cat-logistics">
                         <img src="images/釜山機場.jpg" alt="釜山機場">
                         <div class="card-title">🛬 抵達釜山 (18:00)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=金海國際機場" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="金海國際機場" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -558,7 +606,7 @@
                     <div class="mobile-card cat-logistics">
                         <img src="images/UH SUITE.jpg" alt="UH SUITE">
                         <div class="card-title">🏨 海雲台 Check-in (UH SUITE)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=UH+SUITE+THE+HAEUNDAE" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="UH SUITE THE HAEUNDAE" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -576,7 +624,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/大海鮑魚粥.jpg" alt="大海鮑魚粥">
                         <div class="card-title">🥣 大海鮑魚粥</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=大海鮑魚粥+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="大海鮑魚粥 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -586,7 +634,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/海岸列車.jpg" alt="海岸列車">
                         <div class="card-title">🚃 海岸列車 (尾浦 to 松亭站)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=海雲台藍線公園+尾浦站" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="海雲台藍線公園 尾浦站" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -596,7 +644,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/Skyline Luge.jpg" alt="Skyline Luge">
                         <div class="card-title">🏎️ Skyline Luge Busan</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=Skyline+Luge+Busan" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="Skyline Luge Busan" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -606,7 +654,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/海東龍宮寺.jpg" alt="海東龍宮寺">
                         <div class="card-title">⛩️ 海東龍宮寺</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=海東龍宮寺" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="海東龍宮寺" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -616,7 +664,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/海鮮刀切麵.jpg" alt="海鮮刀切麵">
                         <div class="card-title">🍜 海雲台31公分海鮮刀切麵</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=海雲台31公分海鮮刀切麵" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="海雲台31公分海鮮刀切麵" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -626,7 +674,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/平交道.jpg" alt="平交道">
                         <div class="card-title">🛤️ 青沙浦站灌籃高手平交道</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=青沙浦平交道" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="青沙浦平交道" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -636,7 +684,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/DIART COFFEE.jpg" alt="DIART COFFEE">
                         <div class="card-title">☕ DIART COFFEE (蜂蜜奶油法棍)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=DIART+COFFEE+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="DIART COFFEE 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -646,7 +694,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/天空膠囊列車.jpg" alt="天空膠囊列車">
                         <div class="card-title">🚟 膠囊列車（青沙浦 to 尾浦)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=青沙浦站+藍線公園" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="青沙浦站 藍線公園" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -656,7 +704,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/BUSAN X the SKY.jpg" alt="BUSAN X the SKY">
                         <div class="card-title">🏙️ BUSAN X the SKY</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=BUSAN+X+the+SKY" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="BUSAN X the SKY" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -666,7 +714,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/海雲台市場.jpg" alt="海雲台市場">
                         <div class="card-title">🍢 海雲台傳統市場</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=海雲台傳統市場" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="海雲台傳統市場" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -676,7 +724,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/Yacht holic or 鑽石遊艇之旅 (廣安里碼頭).jpg" alt="遊艇">
                         <div class="card-title">⛵ Yacht holic 鑽石遊艇之旅</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=Yacht+holic+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="Yacht holic 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -694,7 +742,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/自然鹽麵包.jpg" alt="自然鹽麵包">
                         <div class="card-title">🥐 自然鹽麵包</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=自然鹽麵包+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="自然鹽麵包 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -704,7 +752,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/沙灘玩水.jpg" alt="沙灘玩水">
                         <div class="card-title">🏖️ 海雲台沙灘玩水</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=海雲台海水浴場" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="海雲台海水浴場" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -714,12 +762,12 @@
                     <div class="mobile-card cat-logistics" style="margin-bottom:8px;">
                         <img src="images/Hotel Check-out (海雲台).jpg" alt="Check-out">
                         <div class="card-title">🧳 Check-out (海雲台)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=UH+SUITE+THE+HAEUNDAE" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="UH SUITE THE HAEUNDAE" target="_blank">📍 載入中...</a></div>
                     </div>
                     <div class="mobile-card cat-spot">
                         <img src="images/汗蒸幕 (Club D Oasis).jpg" alt="Club D Oasis">
                         <div class="card-title">♨️ Club D Oasis 汗蒸幕</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=클럽디오아시스" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="클럽디오아시스" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -729,7 +777,7 @@
                     <div class="mobile-card cat-logistics">
                         <img src="images/Hotel Check-in (西面).jpg" alt="Check-in">
                         <div class="card-title">🏨 Hotel Check-in (西面)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=西面站+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="西面站 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -739,7 +787,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/味贊王 (韓式燒烤).jpg" alt="味贊王">
                         <div class="card-title">🥩 味贊王鹽烤肉 (西面)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=味贊王鹽烤肉+西面店" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="味贊王鹽烤肉 西面店" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -749,7 +797,7 @@
                     <div class="mobile-card cat-shop">
                         <img src="images/西面 Shopping.jpg" alt="西面 Shopping">
                         <div class="card-title">🛍️ 西面地下街 Shopping</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=西面地下街" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="西面地下街" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -767,12 +815,12 @@
                     <div class="mobile-card cat-food" style="margin-bottom:8px;">
                         <img src="images/Breakfast EGG DROP (西面樂天後門店).jpg" alt="EGG DROP">
                         <div class="card-title">🥪 EGG DROP (西面樂天店)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=EGG+DROP+西面樂天店" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="EGG DROP 西面樂天店" target="_blank">📍 載入中...</a></div>
                     </div>
                     <div class="mobile-card cat-food">
                         <img src="images/秀英本家.jpg" alt="秀英本家">
                         <div class="card-title">🍲 秀英本家</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=秀英本家" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="秀英本家" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -782,7 +830,7 @@
                     <div class="mobile-card cat-shop">
                         <img src="images/韓服體驗.jpg" alt="韓服體驗">
                         <div class="card-title">👘 哲秀和英熙韓服店</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=哲秀和英熙韓服店" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="哲秀和英熙韓服店" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -792,7 +840,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/甘川洞文化村.jpg" alt="甘川洞文化村">
                         <div class="card-title">🎨 甘川洞文化村</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=甘川洞文化村" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="甘川洞文化村" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -802,7 +850,7 @@
                     <div class="mobile-card cat-shop">
                         <img src="images/手翻書.jpg" alt="手翻書">
                         <div class="card-title">📖 釜山手翻書</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=釜山手翻書" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="釜山手翻書" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -812,7 +860,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/Uber.jpg" alt="海底貝殼王國">
                         <div class="card-title">🦪 海底貝殼王國 (松島)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=해저조개왕국" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="해저조개왕국" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -822,7 +870,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/EL16.52 海景咖啡廳.jpg" alt="EL16.52">
                         <div class="card-title">☕ EL16.52 海景咖啡廳</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=EL16.52" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="EL16.52" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -832,7 +880,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/松島海上纜車.jpg" alt="松島纜車">
                         <div class="card-title">🚡 松島海上纜車</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=松島海上纜車" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="松島海上纜車" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -842,7 +890,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/83獬豸.jpg" alt="83獬豸">
                         <div class="card-title">🥩 83獬豸 (西面總店)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=83獬豸+西面" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="83獬豸 西面" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -860,7 +908,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/松亭3代豬肉湯飯.jpg" alt="松亭3代豬肉湯飯">
                         <div class="card-title">🍲 松亭3代豬肉湯飯</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=松亭3代豬肉湯飯" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="松亭3代豬肉湯飯" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -870,7 +918,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/ARTE MUSEUM.jpg" alt="ARTE MUSEUM">
                         <div class="card-title">🖼️ ARTE MUSEUM</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=ARTE+MUSEUM+BUSAN" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="ARTE MUSEUM BUSAN" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -880,7 +928,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/Burger Yo.jpg" alt="Burger Yo">
                         <div class="card-title">🍔 Burger Yo</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=Burger+Yo+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="Burger Yo 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -890,7 +938,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/THRILL ON THE MUG.jpg" alt="THRILL ON THE MUG">
                         <div class="card-title">☕ THRILL ON THE MUG</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=THRILL+ON+THE+MUG" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="THRILL ON THE MUG" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -900,7 +948,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/白淺灘文化村.jpg" alt="白淺灘文化村">
                         <div class="card-title">🌊 白淺灘文化村</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=白淺灘文化村" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="白淺灘文化村" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -910,7 +958,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/Miffy Cafe.jpg" alt="Miffy Cafe">
                         <div class="card-title">☕ Miffy Cafe</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=Miffy+Cafe+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="Miffy Cafe 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -920,7 +968,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/明星一隻雞.jpg" alt="明星一隻雞">
                         <div class="card-title">🍲 明星一隻雞</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=明星一隻雞+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="明星一隻雞 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -930,7 +978,7 @@
                     <div class="mobile-card cat-spot">
                         <img src="images/釜山塔.jpg" alt="釜山塔">
                         <div class="card-title">🗼 釜山塔 (龍頭山公園)</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=釜山塔" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="釜山塔" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -948,7 +996,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/Your Type.jpg" alt="Your Type">
                         <div class="card-title">🍳 Your Type 早午餐</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=Your+Type+釜山" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="Your Type 釜山" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -958,7 +1006,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/OLD MONT Bagel.jpg" alt="OLD MONT Bagel">
                         <div class="card-title">🥯 OLD MONT Bagel</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=OLD+MONT+Bagel" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="OLD MONT Bagel" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -968,7 +1016,7 @@
                     <div class="mobile-card cat-food">
                         <img src="images/三五亭人蔘雞湯.jpg" alt="三五亭人蔘雞湯">
                         <div class="card-title">🍲 三五亭人蔘雞湯</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=三五亭人蔘雞湯" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="三五亭人蔘雞湯" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -978,7 +1026,7 @@
                     <div class="mobile-card cat-logistics">
                         <img src="images/釜山機場.jpg" alt="金海機場">
                         <div class="card-title">🛬 抵達金海國際機場</div>
-                        <div class="card-links"><a href="http://maps.apple.com/?q=金海國際機場" target="_blank">📍 Apple Maps</a></div>
+                        <div class="card-links"><a class="map-link" data-query="金海國際機場" target="_blank">📍 載入中...</a></div>
                     </div>
                 </div>
             </div>
@@ -986,6 +1034,37 @@
     </div>
 
     <script>
+        // 切換地圖的核心邏輯
+        function setMapProvider(provider) {
+            const btnGmap = document.getElementById('btn-gmap');
+            const btnAmap = document.getElementById('btn-amap');
+            const links = document.querySelectorAll('.map-link');
+
+            if (provider === 'gmap') {
+                btnGmap.className = 'map-btn active-gmap';
+                btnAmap.className = 'map-btn';
+                links.forEach(link => {
+                    const query = link.getAttribute('data-query');
+                    link.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+                    link.innerHTML = '📍 Google Maps';
+                });
+            } else if (provider === 'amap') {
+                btnGmap.className = 'map-btn';
+                btnAmap.className = 'map-btn active-amap';
+                links.forEach(link => {
+                    const query = link.getAttribute('data-query');
+                    link.href = `http://maps.apple.com/?q=${encodeURIComponent(query)}`;
+                    link.innerHTML = '🍎 Apple Maps';
+                });
+            }
+        }
+
+        // 初始化預設為 Google Maps
+        document.addEventListener('DOMContentLoaded', () => {
+            setMapProvider('gmap');
+        });
+
+        // 日期頁籤切換
         function switchDay(dayNum) {
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach((tab, index) => {
