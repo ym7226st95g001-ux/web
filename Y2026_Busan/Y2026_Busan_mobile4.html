@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <meta name="referrer" content="no-referrer">
     <title>釜山 6天5夜自由行行程總表 (Apple Maps 版)</title>
     <style>
@@ -241,14 +241,22 @@
         color: #ffffff;
     }
 
-    /* 單日卡片時間軸視圖 (一天一排) */
-    .mobile-view {
-        display: block !important;
-    }
+    /* 手機版單日詳細卡片視圖（允許左右滑動切換 Day） */
+.mobile-view {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory; /* 左右滑動時自動對齊卡片 */
+    -webkit-overflow-scrolling: touch;
+    gap: 15px;
+    padding-bottom: 15px;
+}
 
     .day-schedule {
-        display: none;
-    }
+    display: block !important; /* 讓所有 Day  simultaneous 存在於橫向容器中 */
+    flex: 0 0 100%;            /* 每一天佔滿一個螢幕寬度 */
+    scroll-snap-align: start;  /* 自動停靠頁面 */
+    min-width: 100%;
+}
 
     .day-schedule.active {
         display: block;
