@@ -62,13 +62,14 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             padding: 10px;
             margin-bottom: 25px;
+            -webkit-overflow-scrolling: touch; /* 流暢滑動 */
         }
 
         table.schedule-table {
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
-            min-width: 1200px;
+            min-width: 1000px; /* 確保表格在手機上可左右滑動查看所有欄位 */
         }
 
         .schedule-table th, .schedule-table td {
@@ -83,7 +84,7 @@
             background-color: var(--primary);
             color: #ffffff;
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             padding: 10px 5px;
         }
 
@@ -176,7 +177,7 @@
             background: #d0e4f7;
         }
 
-        /* 預設手機 Tab 切換隱藏 */
+        /* 預設隱藏手機專用單日檢視區塊 */
         .mobile-tabs, .mobile-view {
             display: none;
         }
@@ -195,12 +196,22 @@
                 font-size: 0.75rem;
             }
 
-            /* 隱藏大型桌面視圖 */
-            .table-container, .section-title {
+            .section-title {
+                font-size: 1.05rem;
+                margin: 15px 0 8px 0;
+            }
+
+            /* 手機版只隱藏電腦版第二個大表格（帶圖片的大表），保留第一個精簡總覽表 */
+            .desktop-detail-table {
                 display: none;
             }
 
-            /* 手機 Day 標籤頁切換列 */
+            /* 手機版精簡總覽表可滑動提示 */
+            .table-container {
+                margin-bottom: 15px;
+            }
+
+            /* 顯示手機 Day 標籤頁切換列 */
             .mobile-tabs {
                 display: flex;
                 overflow-x: auto;
@@ -228,7 +239,7 @@
                 border-color: var(--primary);
             }
 
-            /* 手機版 View 切換 */
+            /* 手機版單日詳細卡片視圖 */
             .mobile-view {
                 display: block;
             }
@@ -315,8 +326,8 @@
         <p>出發日期：2026.08.23 ～ 2026.08.28｜精簡總覽與 Apple Maps 直達連結</p>
     </div>
 
-    <!-- ===== 1. 精簡總覽表 (保持 6 天欄位結構，無圖片) ===== -->
-    <div class="section-title">📋 精簡行程總覽 (Summary)</div>
+    <!-- ===== 1. 精簡總覽表 (手機/電腦皆可看，手機上可左右滑動) ===== -->
+    <div class="section-title">📋 精簡行程總覽 (可左右滑動查看全部)</div>
     <div class="table-container">
         <table class="schedule-table">
             <thead>
@@ -444,6 +455,7 @@
     </div>
 
     <!-- ===== 手機版頁籤切換列 ===== -->
+    <div class="section-title mobile-tabs-title">📸 每日詳細行程照片與地圖導航</div>
     <div class="mobile-tabs">
         <button class="tab-btn active" onclick="switchDay(1)">Day 1 (8/23)</button>
         <button class="tab-btn" onclick="switchDay(2)">Day 2 (8/24)</button>
@@ -453,7 +465,7 @@
         <button class="tab-btn" onclick="switchDay(6)">Day 6 (8/28)</button>
     </div>
 
-    <!-- ===== 手機版單日行程視圖 ===== -->
+    <!-- ===== 手機版單日行程卡片視圖 ===== -->
     <div class="mobile-view">
         <!-- Day 1 -->
         <div id="day-1" class="day-schedule active">
@@ -919,9 +931,9 @@
         </div>
     </div>
 
-    <!-- ===== 2. 每日時間軸完整明細 (Detail, 帶圖片與連結) ===== -->
-    <div class="section-title">📅 每日時間軸完整明細 (Detail)</div>
-    <div class="table-container">
+    <!-- ===== 2. 電腦版每日時間軸完整明細 (帶圖片，手機上自動隱藏) ===== -->
+    <div class="section-title desktop-detail-table">📅 每日時間軸完整明細 (Detail)</div>
+    <div class="table-container desktop-detail-table">
         <table class="schedule-table">
             <thead>
                 <tr>
