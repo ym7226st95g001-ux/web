@@ -1172,14 +1172,10 @@
             const table = document.querySelector('.schedule-table');
             if (!table) return;
 
-            // 清除所有既有高亮
             const allCells = table.querySelectorAll('.active-day-col');
             allCells.forEach(cell => cell.classList.remove('active-day-col'));
 
-            // dayNum 為 1~6，在 tr 中的實際 index 為 dayNum
             const colIndex = dayNum;
-
-            // 高亮對應欄位的 <th> 與所有 <td>
             const rows = table.querySelectorAll('tr');
             rows.forEach(row => {
                 const cells = row.children;
@@ -1205,18 +1201,14 @@
                 targetDay.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
             }
 
-            // 同步高亮總表對應天數
             highlightSummaryColumn(dayNum);
         }
 
         // 初始化與滑動監聽
         document.addEventListener('DOMContentLoaded', () => {
             setMapProvider('gmap');
-
-            // 預設高亮 Day 1
             highlightSummaryColumn(1);
 
-            // 手機版左右滑動連動更新頁籤與總表高亮
             const mobileView = document.getElementById('mobileView');
             if (mobileView) {
                 let isScrolling;
@@ -1236,9 +1228,8 @@
                             }
                         });
 
-                        // 同步高亮總表對應天數
                         highlightSummaryColumn(dayNum);
-                    }, 50); // 防抖處裡提升滑動順暢度
+                    }, 50);
                 });
             }
         });
