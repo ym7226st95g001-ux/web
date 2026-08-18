@@ -265,6 +265,11 @@
         /* ===== 手機版頁籤與視圖設定 ===== */
         .mobile-tabs {
             display: flex;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-light);
+            padding: 6px 2px;
         }
         .mobile-view {
             display: block;
@@ -277,9 +282,13 @@
 
             .mobile-tabs {
                 display: flex !important;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: var(--bg-light);
                 overflow-x: auto;
                 gap: 6px;
-                padding: 4px 2px 8px 2px;
+                padding: 6px 2px;
                 margin-bottom: 8px;
                 -webkit-overflow-scrolling: touch;
             }
@@ -1194,15 +1203,20 @@
                 } else {
                     tab.classList.remove('active');
                 }
-            });
+        });
 
-            const targetDay = document.getElementById(`day-${dayNum}`);
-            if (targetDay) {
-                targetDay.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-            }
+    const mobileView = document.getElementById('mobileView');
+    const targetDay = document.getElementById(`day-${dayNum}`);
+    if (mobileView && targetDay) {
+        // 只針對左右容器做水平滑動，避免整個頁面發生垂直跑位/跳動
+        mobileView.scrollTo({
+            left: targetDay.offsetLeft,
+            behavior: 'smooth'
+        });
+    }
 
-            highlightSummaryColumn(dayNum);
-        }
+    highlightSummaryColumn(dayNum);
+}
 
         // 初始化與滑動監聽
         document.addEventListener('DOMContentLoaded', () => {
