@@ -291,12 +291,19 @@
         /* ===== 手機版頁籤與視圖設定 ===== */
         .mobile-tabs {
             display: flex;
+            background: var(--bg-light);
+            padding: 6px 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* 當符合 Sticky 條件時套用固定樣式 */
+        .mobile-tabs.is-sticky {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: var(--bg-light);
-            padding: 6px 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
+
         .mobile-view {
             display: block;
         }
@@ -397,9 +404,6 @@
 
             .mobile-tabs {
                 display: flex !important;
-                position: sticky;
-                top: 0;
-                z-index: 100;
                 background: var(--bg-light);
                 overflow-x: auto;
                 gap: 6px;
@@ -746,7 +750,7 @@
 </div>
 <!-- ===== 手機版單日行程卡片視圖 ===== -->
 <div class="section-title">📸 每日詳細行程與導航</div>
-<div class="mobile-tabs">
+<div class="mobile-tabs" id="mobileTabs">
 <button class="tab-btn active" onclick="switchDay(1)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 1 (8/23)</button>
 <button class="tab-btn" onclick="switchDay(2)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 2 (8/24)</button>
 <button class="tab-btn" onclick="switchDay(3)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 3 (8/25)</button>
@@ -755,6 +759,7 @@
 <button class="tab-btn" onclick="switchDay(6)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 6 (8/28)</button>
 </div>
 <div class="mobile-view" id="mobileView">
+
 <!-- Day 1 -->
 <div class="day-schedule" id="day-1">
 <div class="day-header">
@@ -1274,6 +1279,7 @@
 </div>
 </div>
 
+
 <!-- ===== 3. 指定圖片底圖 + Day1~Day6 色彩景點標註 ===== -->
 <div class="section-title" id="full-map-title">
 <span>🗺️ 釜山自由行景點導覽圖 (Day1~Day6 顏色標示)</span>
@@ -1407,7 +1413,6 @@
             const mobileView = document.getElementById('mobileView');
             const targetDay = document.getElementById(`day-${dayNum}`);
             if (mobileView && targetDay) {
-                // 只針對左右容器做水平滑動，避免整個頁面發生垂直跑位/跳動
                 mobileView.scrollTo({
                     left: targetDay.offsetLeft,
                     behavior: 'smooth'
@@ -1417,10 +1422,53 @@
             highlightSummaryColumn(dayNum);
         }
 
+        // 動態監聽頂部按鈕區塊 Sticky 狀態
+        function initStickyObserver() {
+            const mobileTabs = document.getElementById('mobileTabs');
+            const mobileView = document.getElementById('mobileView');
+            const mapSection = document.getElementById('full-map-section');
+
+            if (!mobileTabs || !mobileView) return;
+
+            // 1. 監聽「每日詳細行程卡片區塊」：當此區塊在視窗內時，開啟 Sticky Sticky
+            const viewObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        mobileTabs.classList.add('is-sticky');
+                    } else {
+                        // 當完全滑出行程卡片區塊時移除
+                        mobileTabs.classList.remove('is-sticky');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.05
+            });
+
+            viewObserver.observe(mobileView);
+
+            // 2. 監聽「全景景點導覽圖區塊」：一旦導覽圖進入畫面，強制解除 Sticky
+            if (mapSection) {
+                const mapObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            mobileTabs.classList.remove('is-sticky');
+                        }
+                    });
+                }, {
+                    root: null,
+                    threshold: 0.01
+                });
+
+                mapObserver.observe(mapSection);
+            }
+        }
+
         // 初始化與滑動監聽
         document.addEventListener('DOMContentLoaded', () => {
             setMapProvider('gmap');
             highlightSummaryColumn(1);
+            initStickyObserver();
 
             const mobileView = document.getElementById('mobileView');
             if (mobileView) {
