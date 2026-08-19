@@ -154,6 +154,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            scroll-margin-top: 10px;
         }
 
         .jump-link {
@@ -538,7 +539,7 @@
 <!-- ===== 1. 精簡總覽表 ===== -->
 <div class="section-title" id="summary-section">
 <span>📋 精簡行程總覽</span>
-<a class="jump-link" href="#full-map-section">🗺️ 看全景導覽圖 👇</a>
+<a class="jump-link" href="#full-map-title">🗺️ 看全景導覽圖 👇</a>
 </div>
 <div class="table-container">
 <table class="schedule-table">
@@ -797,11 +798,11 @@
 </div>
 
 <!-- ===== 3. 指定圖片底圖 + Day1~Day6 色彩景點標註 ===== -->
-<div class="section-title" id="full-map-section">
+<div class="section-title" id="full-map-title">
 <span>🗺️ 釜山自由行景點導覽圖 (Day1~Day6 顏色標示)</span>
 <a class="jump-link" href="#summary-section">📋 回精簡行程總覽 ☝️</a>
 </div>
-<div class="custom-map-container">
+<div class="custom-map-container" id="full-map-section">
     <div class="custom-map-wrapper">
         <!-- 指定底圖圖片 -->
         <img class="bg-map-img" alt="釜山旅遊地圖底圖" src="https://ym7226st95g001-ux.github.io/web/Y2026_Busan/images/ChatGPT%20Image%202026%E5%B9%B48%E6%9C%8820%E6%97%A5%20%E4%B8%8A%E5%8D%8812_09_17.png"/>
