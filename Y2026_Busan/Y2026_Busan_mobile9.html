@@ -156,6 +156,24 @@
             gap: 6px;
         }
 
+        .jump-link {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--primary);
+            text-decoration: none;
+            margin-left: auto;
+            background: #ffffff;
+            padding: 3px 10px;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            transition: all 0.2s ease;
+        }
+
+        .jump-link:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
         /* ===== 通用表格容器 (手機一頁呈現優影) ===== */
         .table-container {
             width: 100%;
@@ -518,7 +536,10 @@
 </div>
 
 <!-- ===== 1. 精簡總覽表 ===== -->
-<div class="section-title">📋 精簡行程總覽</div>
+<div class="section-title" id="summary-section">
+<span>📋 精簡行程總覽</span>
+<a class="jump-link" href="#full-map-section">🗺️ 看全景導覽圖 👇</a>
+</div>
 <div class="table-container">
 <table class="schedule-table">
 <thead>
@@ -776,7 +797,10 @@
 </div>
 
 <!-- ===== 3. 指定圖片底圖 + Day1~Day6 色彩景點標註 ===== -->
-<div class="section-title">🗺️ 釜山自由行景點導覽圖 (Day1~Day6 顏色標示)</div>
+<div class="section-title" id="full-map-section">
+<span>🗺️ 釜山自由行景點導覽圖 (Day1~Day6 顏色標示)</span>
+<a class="jump-link" href="#summary-section">📋 回精簡行程總覽 ☝️</a>
+</div>
 <div class="custom-map-container">
     <div class="custom-map-wrapper">
         <!-- 指定底圖圖片 -->
