@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" name="viewport"/>
 <meta content="no-referrer" name="referrer"/>
-<title>釜山 6天5夜自由行行程總表</title>
+<title>釜山 6天5夜自由行行程總表與景點地圖</title>
+<!-- 引入 Leaflet 地圖樣式（用於手機定位導覽） -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
         :root {
             --primary: #0077b6;
@@ -29,6 +30,14 @@
             --cat-logistics-bg: #dcfce7;
             --cat-logistics-text: #166534;
             --cat-logistics-border: #bbf7d0;
+
+            /* ===== 天數顏色（地圖標籤用） ===== */
+            --day1-color: #ef4444;
+            --day2-color: #3b82f6;
+            --day3-color: #10b981;
+            --day4-color: #f59e0b;
+            --day5-color: #8b5cf6;
+            --day6-color: #ec4899;
         }
 
         * {
@@ -143,10 +152,29 @@
             font-size: 1rem;
             font-weight: bold;
             color: var(--header-bg);
-            margin: 12px 0 8px 0;
+            margin: 16px 0 8px 0;
             display: flex;
             align-items: center;
             gap: 6px;
+            scroll-margin-top: 10px;
+        }
+
+        .jump-link {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--primary);
+            text-decoration: none;
+            margin-left: auto;
+            background: #ffffff;
+            padding: 3px 10px;
+            border-radius: 15px;
+            border: 1px solid var(--primary);
+            transition: all 0.2s ease;
+        }
+
+        .jump-link:hover {
+            background: var(--primary);
+            color: #ffffff;
         }
 
         /* ===== 通用表格容器 (手機一頁呈現優化) ===== */
@@ -265,9 +293,155 @@
         /* ===== 手機版頁籤與視圖設定 ===== */
         .mobile-tabs {
             display: flex;
+            background: var(--bg-light);
+            padding: 6px 2px;
+            transition: all 0.3s ease;
         }
+
+        /* 當符合 Sticky 條件時套用固定樣式 */
+        .mobile-tabs.is-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
         .mobile-view {
             display: block;
+        }
+
+        /* ===== 自訂圖片背景地圖區域樣式 ===== */
+        .custom-map-container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 12px;
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        .custom-map-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .bg-map-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 地圖點位標記 (Overlay) */
+        .map-pin {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            padding: 3px 8px;
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .map-pin:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            z-index: 20;
+        }
+
+        .map-pin .pin-icon {
+            margin-right: 3px;
+        }
+
+        .pin-d1 { background-color: var(--day1-color); border: 1.5px solid #fff; }
+        .pin-d2 { background-color: var(--day2-color); border: 1.5px solid #fff; }
+        .pin-d3 { background-color: var(--day3-color); border: 1.5px solid #fff; }
+        .pin-d4 { background-color: var(--day4-color); border: 1.5px solid #fff; }
+        .pin-d5 { background-color: var(--day5-color); border: 1.5px solid #fff; }
+        .pin-d6 { background-color: var(--day6-color); border: 1.5px solid #fff; }
+
+        /* ===== 手機即時定位閃爍標記樣式 (Live GPS Pulsing Marker) ===== */
+        .live-gps-container {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            pointer-events: none;
+        }
+        .pulsing-marker {
+            width: 24px;
+            height: 24px;
+            background-color: #ff3b30;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.8);
+            animation: pulse-animation 1.5s infinite;
+        }
+        @keyframes pulse-animation {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.8);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 16px rgba(255, 59, 48, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+            }
+        }
+        .gps-status-bar {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .day-route-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .day-route-card {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+        }
+
+        .day-route-card h4 {
+            color: var(--header-bg);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .day-route-card p {
+            color: #475569;
+            line-height: 1.4;
         }
 
         @media screen and (max-width: 960px) {
@@ -277,9 +451,10 @@
 
             .mobile-tabs {
                 display: flex !important;
+                background: var(--bg-light);
                 overflow-x: auto;
                 gap: 6px;
-                padding: 4px 2px 8px 2px;
+                padding: 6px 2px;
                 margin-bottom: 8px;
                 -webkit-overflow-scrolling: touch;
             }
@@ -414,6 +589,11 @@
                 box-shadow: 0 1px 3px rgba(0,0,0,0.12);
                 transition: all 0.2s;
             }
+
+            .map-pin {
+                font-size: 0.55rem;
+                padding: 2px 4px;
+            }
         }
     </style>
 <style>.map-verified-note{font-size:11px;margin:8px 12px 12px;padding:8px 10px;border-radius:8px;background:#f5f7fa;color:#555;line-height:1.45}.map-verified-note b{color:#222}</style></head>
@@ -427,7 +607,7 @@
 <span class="map-selector-label">🗺️ 地圖切換：</span>
 <button class="map-btn active-gmap" id="btn-gmap" onclick="setMapProvider('gmap')">Google Maps</button>
 <button class="map-btn" id="btn-amap" onclick="setMapProvider('amap')">Apple Maps</button>
-</div><div class="map-verified-note">🧭 <b>V10 地圖連結已重整：</b>餐廳/景點盡量加入「店名＋地址」避免同名分店誤導；Uber 移動項目不再錯誤連到景點。</div>
+</div>
 <!-- 圖例與標籤說明 -->
 <div class="color-legend">
 <div class="legend-item"><span class="legend-dot food"></span> 餐飲美食</div>
@@ -436,7 +616,10 @@
 <div class="legend-item"><span class="legend-dot logistics"></span> 交通/飯店</div>
 </div>
 <!-- ===== 1. 精簡總覽表 ===== -->
-<div class="section-title">📋 精簡行程總覽</div>
+<div class="section-title" id="summary-section">
+<span>📋 精簡行程總覽</span>
+<a class="jump-link" href="#full-map-title">🗺️ 看全景導覽圖 👇</a>
+</div>
 <div class="table-container">
 <table class="schedule-table">
 <thead>
@@ -516,7 +699,7 @@
 <td><div class="summary-item cat-food"><span class="icon">🍜</span> 31公分海鮮刀切麵</div></td>
 <td></td>
 <td><div class="summary-item cat-logistics"><span class="icon">🚕</span> 搭乘 Uber</div></td>
-<td><div class="summary-item cat-food"><span class="icon">☕</span> THRILL ON THE MUG</div></td>
+<td><div class="summary-item cat-food"><span class="icon">☕</span>P.ARK Cafe & Bakery</div></td>
 <td></td>
 </tr>
 <tr>
@@ -569,7 +752,7 @@
 </tr>
 <tr>
 <td class="time-cell">19:00</td>
-<td><div class="summary-item cat-logistics"><span class="icon">🏨</span> 海雲台 Check-in</div></td>
+<td><div class="summary-item cat-logistics"><span class="icon">🏨</span> 海雲台 Check-in (Stay Black, Stay Alive)</div></td>
 <td><div class="summary-item cat-spot"><span class="icon">⛵</span> 鑽石遊艇之旅</div></td>
 <td></td>
 <td><div class="summary-item cat-food"><span class="icon">🥩</span> 83獬豸 (西面總店)</div></td>
@@ -614,7 +797,7 @@
 </div>
 <!-- ===== 手機版單日行程卡片視圖 ===== -->
 <div class="section-title">📸 每日詳細行程與導航</div>
-<div class="mobile-tabs">
+<div class="mobile-tabs" id="mobileTabs">
 <button class="tab-btn active" onclick="switchDay(1)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 1 (8/23)</button>
 <button class="tab-btn" onclick="switchDay(2)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 2 (8/24)</button>
 <button class="tab-btn" onclick="switchDay(3)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 3 (8/25)</button>
@@ -623,6 +806,7 @@
 <button class="tab-btn" onclick="switchDay(6)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 6 (8/28)</button>
 </div>
 <div class="mobile-view" id="mobileView">
+
 <!-- Day 1 -->
 <div class="day-schedule" id="day-1">
 <div class="day-header">
@@ -653,9 +837,9 @@
 <div class="timeline-time">19:00</div>
 <div class="timeline-content">
 <div class="mobile-card cat-logistics">
-<img alt="UH SUITE" src="images/UH SUITE.jpg"/>
-<div class="card-title">🏨 海雲台 Check-in (UH SUITE)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="UH Suite The Haeundae, 271 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<img alt="Stay Black, Stay Alive" src="images/moon.jpg"/>
+<div class="card-title">🏨 海雲台 Check-in (Stay Black, Stay Alive)</div>
+<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -712,7 +896,7 @@
 <div class="mobile-card cat-spot">
 <img alt="海岸列車" src="images/海岸列車.jpg"/>
 <div class="card-title">🚃 海岸列車 (尾浦 to 松亭站)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Haeundae Blueline Park Mipo Station, 13 Dalmaji-gil 62beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-map-verified="true" data-query="35.0788, 129.0652" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -848,8 +1032,8 @@
 <div class="timeline-content">
 <div class="mobile-card cat-logistics" style="margin-bottom:8px;">
 <img alt="Check-out" src="images/Hotel Check-out (海雲台).jpg"/>
-<div class="card-title">🧳 Check-out (海雲台)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="UH Suite The Haeundae, 271 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-title">🧳 Check-out (Stay Black, Stay Alive)</div>
+<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 <div class="mobile-card cat-spot">
 <img alt="Club D Oasis" src="images/汗蒸幕 (Club D Oasis).jpg"/>
@@ -1031,9 +1215,9 @@
 <div class="timeline-time">13:00</div>
 <div class="timeline-content">
 <div class="mobile-card cat-food">
-<img alt="THRILL ON THE MUG" src="images/THRILL-ON-THE-MUG16.jpg"/>
-<div class="card-title">☕ THRILL ON THE MUG</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Thrill On The Mug, Taejongdae, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<img alt="釜山影島P.ARK Cafe & Bakery" src="images/P.ARK Cafe.jpg"/>
+<div class="card-title">☕ 釜山影島P.ARK Cafe & Bakery</div>
+<div class="card-links"><a class="map-link" data-map-verified="true" data-query="P.ARK, 180 Haeyang-ro 195beon-gil, Yeongdo-gu, Busan" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1141,6 +1325,93 @@
 </div>
 </div>
 </div>
+
+
+<!-- ===== 3. 指定圖片底圖 + 手機即時定位閃爍點 ===== -->
+<div class="section-title" id="full-map-title">
+<span>🗺️ 釜山自由行景點導覽圖 (含手機即時GPS定位)</span>
+<a class="jump-link" href="#summary-section">📋 回精簡行程總覽 ☝️</a>
+</div>
+<div class="custom-map-container" id="full-map-section">
+    <!-- 手機定位狀態提示列 -->
+    <div class="gps-status-bar" id="gpsStatusText">
+        📡 正在請求手機定位權限，尋找您在釜山的即時位置...
+    </div>
+
+    <div class="custom-map-wrapper" id="mapWrapper">
+        <!-- 指定底圖圖片 -->
+        <img class="bg-map-img" id="bgMapImg" alt="釜山旅遊地圖底圖" src="https://ym7226st95g001-ux.github.io/web/Y2026_Busan/images/ChatGPT%20Image%202026%E5%B9%B48%E6%9C%8820%E6%97%A5%20%E4%B8%8A%E5%8D%8812_09_17.png"/>
+
+        <!-- Day 1 標籤 (🔴 紅色) -->
+        <div class="map-pin pin-d1" style="top: 35%; left: 12%;"><span class="pin-icon">🛫</span>D1 金海機場</div>
+        <div class="map-pin pin-d1" style="top: 48%; left: 63%;"><span class="pin-icon">🏨</span>D1 海雲台住宿</div>
+        <div class="map-pin pin-d1" style="top: 54%; left: 58%;"><span class="pin-icon">🌃</span>D1 The Bay 101</div>
+
+        <!-- Day 2 標籤 (🔵 藍色) -->
+        <div class="map-pin pin-d2" style="top: 44%; left: 68%;"><span class="pin-icon">🚃</span>D2 海岸/膠囊列車</div>
+        <div class="map-pin pin-d2" style="top: 40%; left: 74%;"><span class="pin-icon">☕</span>D2 青沙浦</div>
+        <div class="map-pin pin-d2" style="top: 25%; left: 82%;"><span class="pin-icon">🏎️</span>D2 Skyline Luge</div>
+        <div class="map-pin pin-d2" style="top: 20%; left: 87%;"><span class="pin-icon">⛩️</span>D2 海東龍宮寺</div>
+        <div class="map-pin pin-d2" style="top: 51%; left: 66%;"><span class="pin-icon">🏙️</span>D2 BUSAN X the SKY</div>
+        <div class="map-pin pin-d2" style="top: 59%; left: 52%;"><span class="pin-icon">⛵</span>D2 鑽石遊艇</div>
+
+        <!-- Day 3 標籤 (🟢 綠色) -->
+        <div class="map-pin pin-d3" style="top: 49%; left: 64%;"><span class="pin-icon">🏖️</span>D3 海雲台沙灘</div>
+        <div class="map-pin pin-d3" style="top: 52%; left: 68%;"><span class="pin-icon">♨️</span>D3 Club D Oasis</div>
+        <div class="map-pin pin-d3" style="top: 41%; left: 33%;"><span class="pin-icon">🥩</span>D3 西面味贊王</div>
+        <div class="map-pin pin-d3" style="top: 44%; left: 35%;"><span class="pin-icon">🛍️</span>D3 西面地下街</div>
+
+        <!-- Day 4 標籤 (🟡 橘黃色) -->
+        <div class="map-pin pin-d4" style="top: 39%; left: 34%;"><span class="pin-icon">🥪</span>D4 西面EGG DROP</div>
+        <div class="map-pin pin-d4" style="top: 67%; left: 26%;"><span class="pin-icon">🎨</span>D4 甘川洞文化村</div>
+        <div class="map-pin pin-d4" style="top: 78%; left: 28%;"><span class="pin-icon">🦪</span>D4 海底貝殼王國</div>
+        <div class="map-pin pin-d4" style="top: 83%; left: 31%;"><span class="pin-icon">🚡</span>D4 松島海上纜車</div>
+
+        <!-- Day 5 標籤 (🟣 紫色) -->
+        <div class="map-pin pin-d5" style="top: 72%; left: 39%;"><span class="pin-icon">🖼️</span>D5 ARTE MUSEUM</div>
+        <div class="map-pin pin-d5" style="top: 76%; left: 42%;"><span class="pin-icon">☕</span>D5 P.ARK Cafe</div>
+        <div class="map-pin pin-d5" style="top: 80%; left: 36%;"><span class="pin-icon">🌊</span>D5 白淺灘文化村</div>
+        <div class="map-pin pin-d5" style="top: 65%; left: 33%;"><span class="pin-icon">🗼</span>D5 釜山塔/樂天</div>
+
+        <!-- Day 6 標籤 (🌸 粉色) -->
+        <div class="map-pin pin-d6" style="top: 42%; left: 37%;"><span class="pin-icon">🍳</span>D6 田浦Your Type</div>
+        <div class="map-pin pin-d6" style="top: 45%; left: 33%;"><span class="pin-icon">🏃</span>D6 Running Man</div>
+
+        <!-- 動態手機即時定位閃爍點 (預設隱藏，定位成功後動態顯示) -->
+        <div class="live-gps-container" id="liveGpsPin" style="display: none; top: 0%; left: 0%;">
+            <div class="pulsing-marker"></div>
+        </div>
+    </div>
+
+    <!-- 每日行程路線摘要卡片 -->
+    <div class="day-route-list">
+        <div class="day-route-card" style="border-left-color: var(--day1-color);">
+            <h4><span>🔴 Day 1 路線景點</span><span style="color:var(--day1-color);">海雲台區</span></h4>
+            <p>桃園機場 ➔ 金海機場 ➔ 海雲台 Check-in ➔ 廣安木 ➔ The Bay 101 ➔ 海雲台 E-mart</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day2-color);">
+            <h4><span>🔵 Day 2 路線景點</span><span style="color:var(--day2-color);">東海岸/機張區</span></h4>
+            <p>大海鮑魚粥 ➔ 海岸列車 (尾浦➔松亭) ➔ Skyline Luge ➔ 海東龍宮寺 ➔ 31公分海鮮刀切麵 ➔ 青沙浦平交道 & Cafe ➔ 天空膠囊列車 ➔ BUSAN X the SKY ➔ 海雲台市場 ➔ 鑽石遊艇 ➔ 大創</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day3-color);">
+            <h4><span>🟢 Day 3 路線景點</span><span style="color:var(--day3-color);">海雲台 ➔ 西面</span></h4>
+            <p>自然鹽麵包 ➔ 海雲台沙灘 ➔ Club D Oasis 汗蒸幕 ➔ 西面 Hotel Check-in ➔ 味贊王鹽烤肉 ➔ 西面地下街</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day4-color);">
+            <h4><span>🟡 Day 4 路線景點</span><span style="color:var(--day4-color);">西面/甘川/松島</span></h4>
+            <p>EGG DROP ➔ 哲秀和英熙韓服 ➔ 甘川洞文化村 ➔ 釜山手翻書 ➔ 海底貝殼王國 ➔ EL16.52 Cafe ➔ 松島海上纜車 ➔ 83獬豸</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day5-color);">
+            <h4><span>🟣 Day 5 路線景點</span><span style="color:var(--day5-color);">影島/南浦區</span></h4>
+            <p>松亭3代湯飯/秀英本家 ➔ ARTE MUSEUM ➔ Burger Yo ➔ P.ARK Cafe ➔ 白淺灘文化村 ➔ Miffy Cafe ➔ 明星一隻雞 ➔ 釜山塔 ➔ 樂天百貨/超市</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day6-color);">
+            <h4><span>🌸 Day 6 路線景點</span><span style="color:var(--day6-color);">西面田浦 ➔ 返程</span></h4>
+            <p>Your Type 早午餐 ➔ OLD MONT Bagel ➔ 三五亭人蔘雞湯 ➔ Running Man 體驗館 ➔ 金海機場</p>
+        </div>
+    </div>
+</div>
+
 <script>
         // 切換地圖的核心邏輯
         function setMapProvider(provider) {
@@ -1172,14 +1443,10 @@
             const table = document.querySelector('.schedule-table');
             if (!table) return;
 
-            // 清除所有既有高亮
             const allCells = table.querySelectorAll('.active-day-col');
             allCells.forEach(cell => cell.classList.remove('active-day-col'));
 
-            // dayNum 為 1~6，在 tr 中的實際 index 為 dayNum
             const colIndex = dayNum;
-
-            // 高亮對應欄位的 <th> 與所有 <td>
             const rows = table.querySelectorAll('tr');
             rows.forEach(row => {
                 const cells = row.children;
@@ -1200,23 +1467,134 @@
                 }
             });
 
+            const mobileView = document.getElementById('mobileView');
             const targetDay = document.getElementById(`day-${dayNum}`);
-            if (targetDay) {
-                targetDay.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+            if (mobileView && targetDay) {
+                mobileView.scrollTo({
+                    left: targetDay.offsetLeft,
+                    behavior: 'smooth'
+                });
             }
 
-            // 同步高亮總表對應天數
             highlightSummaryColumn(dayNum);
+        }
+
+        // 動態監聽頂部按鈕區塊 Sticky 狀態
+        function initStickyObserver() {
+            const mobileTabs = document.getElementById('mobileTabs');
+            const mobileView = document.getElementById('mobileView');
+            const mapSection = document.getElementById('full-map-section');
+
+            if (!mobileTabs || !mobileView) return;
+
+            const viewObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        mobileTabs.classList.add('is-sticky');
+                    } else {
+                        mobileTabs.classList.remove('is-sticky');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.05
+            });
+
+            viewObserver.observe(mobileView);
+
+            if (mapSection) {
+                const mapObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            mobileTabs.classList.remove('is-sticky');
+                        }
+                    });
+                }, {
+                    root: null,
+                    threshold: 0.01
+                });
+
+                mapObserver.observe(mapSection);
+            }
+        }
+
+        // ===== 手機即時定位與底圖座標對應換算 =====
+        function initLiveGPS() {
+            const statusText = document.getElementById('gpsStatusText');
+            const gpsPin = document.getElementById('liveGpsPin');
+
+            if (!navigator.geolocation) {
+                statusText.innerHTML = "⚠️ 您的瀏覽器不支援手機定位功能。";
+                return;
+            }
+
+            // 釜山地圖圖片邊界經緯度對應 (概算邊界範圍)
+            // 北界(頂部): ~35.2400, 南界(底部): ~35.0400
+            // 西界(左側): ~128.9000, 東界(右側): ~129.2500
+            const mapBounds = {
+                latMax: 35.2400,
+                latMin: 35.0400,
+                lngMin: 128.9000,
+                lngMax: 129.2500
+            };
+
+            navigator.geolocation.watchPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    // 檢查是否在釜山大略範圍內 (緯度 35.04~35.24, 經度 128.9~129.25)
+                    if (lat >= mapBounds.latMin && lat <= mapBounds.latMax && lng >= mapBounds.lngMin && lng <= mapBounds.lngMax) {
+                        // 計算百分比座標位置投射到圖片上
+                        const leftPercent = ((lng - mapBounds.lngMin) / (mapBounds.lngMax - mapBounds.lngMin)) * 100;
+                        const topPercent = ((mapBounds.latMax - lat) / (mapBounds.latMax - mapBounds.latMin)) * 100;
+
+                        gpsPin.style.left = `${leftPercent}%`;
+                        gpsPin.style.top = `${topPercent}%`;
+                        gpsPin.style.display = 'block';
+
+                        statusText.innerHTML = `📍 已偵測到您在釜山！閃爍紅點為您的即時位置 (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})`;
+                        statusText.style.background = "#dcfce7";
+                        statusText.style.color = "#166534";
+                    } else {
+                        // 不在釜山範圍內（例如人在台灣或其他地方）
+                        gpsPin.style.display = 'none';
+                        statusText.innerHTML = `📍 目前偵測您的位置不在釜山範圍內 (Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)})。抵達釜山後將自動顯示閃爍點！`;
+                        statusText.style.background = "#fef3c7";
+                        statusText.style.color = "#92400e";
+                    }
+                },
+                (error) => {
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            statusText.innerHTML = "❌ 您已拒絕定位權限，無法顯示即時位置。";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            statusText.innerHTML = "⚠️ 目前無法取得您的定位資訊。";
+                            break;
+                        case error.TIMEOUT:
+                            statusText.innerHTML = "⏱️ 定位連線逾時，請檢查網路或GPS訊號。";
+                            break;
+                        default:
+                            statusText.innerHTML = "⚠️ 定位發生未知錯誤。";
+                            break;
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    maximumAge: 10000,
+                    timeout: 15000
+                }
+            );
         }
 
         // 初始化與滑動監聽
         document.addEventListener('DOMContentLoaded', () => {
             setMapProvider('gmap');
-
-            // 預設高亮 Day 1
             highlightSummaryColumn(1);
+            initStickyObserver();
+            initLiveGPS(); // 啟動手機即時定位偵測
 
-            // 手機版左右滑動連動更新頁籤與總表高亮
             const mobileView = document.getElementById('mobileView');
             if (mobileView) {
                 let isScrolling;
@@ -1236,12 +1614,11 @@
                             }
                         });
 
-                        // 同步高亮總表對應天數
                         highlightSummaryColumn(dayNum);
-                    }, 50); // 防抖處裡提升滑動順暢度
+                    }, 50);
                 });
             }
         });
-    </script>
+</script>
 </body>
 </html>
