@@ -283,105 +283,88 @@
             display: block;
         }
 
-        /* ===== 底部互動地圖樣式 ===== */
+        /* ===== 自訂 Q 版地圖容器與標記樣式 ===== */
         .busan-map-container {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-top: 20px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .busan-map-legend {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .day-legend-tag {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.72rem;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 12px;
-            color: #fff;
-        }
-
-        .map-svg-wrapper {
             position: relative;
             width: 100%;
-            background: #e0f2fe;
-            border-radius: 8px;
+            max-width: 800px;
+            margin: 20px auto 30px auto;
             overflow: hidden;
-            border: 1px solid #bae6fd;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            background-color: #f5f5f0;
+        }
+
+        .busan-map-bg {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         .map-marker {
-            cursor: pointer;
-            transition: transform 0.2s, filter 0.2s;
-        }
-
-        .map-marker:hover {
-            transform: scale(1.3);
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
-        }
-
-        .map-path {
-            fill: none;
-            stroke-dasharray: 4, 3;
-            stroke-width: 2.5;
-            animation: dash 30s linear infinite;
-        }
-
-        @keyframes dash {
-            to { stroke-dashoffset: -100; }
-        }
-
-        .map-tooltip {
             position: absolute;
-            display: none;
-            background: rgba(15, 23, 42, 0.92);
-            color: #ffffff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            z-index: 1000;
-            pointer-events: auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            max-width: 200px;
-            backdrop-filter: blur(4px);
-        }
-
-        .map-tooltip h4 {
-            font-size: 0.82rem;
-            margin-bottom: 4px;
-            color: #38bdf8;
-        }
-
-        .map-tooltip-links {
+            transform: translate(-50%, -50%);
             display: flex;
-            gap: 6px;
-            margin-top: 6px;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
         }
 
-        .map-tooltip-btn {
-            font-size: 0.68rem;
-            padding: 3px 6px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: #fff;
+        .marker-icon {
+            width: 12px;
+            height: 12px;
+            background-color: #e74c3c;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .marker-label {
+            background-color: rgba(255, 255, 255, 0.92);
+            color: #2c3e50;
+            font-size: 11px;
             font-weight: bold;
-            background: #0284c7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 3px;
+            white-space: nowrap;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
-        .map-tooltip-btn.apple {
-            background: #333;
+        .user-location-marker {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .user-dot {
+            width: 14px;
+            height: 14px;
+            background-color: #2980b9;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.4);
+            animation: pulse 1.8s infinite;
+        }
+
+        .user-label {
+            background-color: #2980b9;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 3px;
+            white-space: nowrap;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0px rgba(41, 128, 185, 0.6); }
+            70% { box-shadow: 0 0 0 10px rgba(41, 128, 185, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(41, 128, 185, 0); }
         }
 
         @media screen and (max-width: 960px) {
@@ -534,7 +517,7 @@
             }
         }
     </style>
-<style>.map-verified-note{font-size:11px;margin:8px 12px 12px;padding:8px 10px;border-radius:8px;background:#f5f7fa;color:#555;line-height:1.45}.map-verified-note b{color:#222}</style></head>
+</head>
 <body>
 <div class="header-title">
 <h1>🇰🇷 釜山 6天5夜自由行行程總表</h1>
@@ -661,7 +644,7 @@
 <tr>
 <td class="time-cell">16:00</td>
 <td></td>
-<td><div class="summary-item cat-spot"><span class="icon">𚟟</span> 天空膠囊列車</div></td>
+<td><div class="summary-item cat-spot"><span class="icon">🚟</span> 天空膠囊列車</div></td>
 <td><div class="summary-item cat-food"><span class="icon">🥩</span> 味贊王韓式燒烤</div></td>
 <td><div class="summary-item cat-food"><span class="icon">☕</span> EL16.52 海景咖啡</div></td>
 <td><div class="summary-item cat-food"><span class="icon">☕</span> Miffy Cafe</div></td>
@@ -753,7 +736,7 @@
 <div class="mobile-card cat-logistics">
 <img alt="桃園機場" src="images/桃園機場.jpg"/>
 <div class="card-title">🛫 桃園出發 (14:40)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Taoyuan International Airport, Dayuan District, Taoyuan City, Taiwan" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Taoyuan International Airport, Dayuan District, Taoyuan City, Taiwan" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -763,7 +746,7 @@
 <div class="mobile-card cat-logistics">
 <img alt="釜山機場" src="images/釜山機場.jpg"/>
 <div class="card-title">🛬 抵達釜山 (18:00)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Gimhae International Airport, 108 Gonghangjinip-ro, Gangseo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Gimhae International Airport, 108 Gonghangjinip-ro, Gangseo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -773,7 +756,7 @@
 <div class="mobile-card cat-logistics">
 <img alt="Stay Black, Stay Alive" src="images/moon.jpg"/>
 <div class="card-title">🏨 海雲台 Check-in (Stay Black, Stay Alive)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -783,7 +766,7 @@
 <div class="mobile-card cat-food">
 <img alt="Dinner廣安木（韓式烤肉）" src="images/Dinner廣安木（韓式烤肉）.jpg"/>
 <div class="card-title">🥩 廣安木（韓式烤肉）or Jinwoorin Haejang（韓式牛料理）</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="광안목, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="광안목, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -793,7 +776,7 @@
 <div class="mobile-card cat-spot">
 <img alt="The Bay 101" src="images/The Bay 101.jpg"/>
 <div class="card-title">🌃 The Bay 101 夜景</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="The Bay 101, 52 Dongbaek-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="The Bay 101, 52 Dongbaek-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -803,7 +786,7 @@
 <div class="mobile-card cat-shop">
 <img alt="海雲台E-mart" src="images/海雲台E-mart.jpg"/>
 <div class="card-title">🛒 海雲台 E-mart</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Emart Haeundae, 511 Jwadong-sunhwan-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Emart Haeundae, 511 Jwadong-sunhwan-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -820,7 +803,7 @@
 <div class="mobile-card cat-food">
 <img alt="大海鮑魚粥" src="images/大海鮑魚粥.jpg"/>
 <div class="card-title">🥣 大海鮑魚粥</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Bada Maru Abalone Porridge, 7 Dalmaji-gil 62beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Bada Maru Abalone Porridge, 7 Dalmaji-gil 62beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -830,7 +813,7 @@
 <div class="mobile-card cat-spot">
 <img alt="海岸列車" src="images/海岸列車.jpg"/>
 <div class="card-title">🚃 海岸列車 (尾浦 to 松亭站)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="35.0788, 129.0652" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="35.0788, 129.0652" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -840,7 +823,7 @@
 <div class="mobile-card cat-spot">
 <img alt="Skyline Luge" src="images/Skyline Luge.jpg"/>
 <div class="card-title">🏎️ Skyline Luge Busan</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Skyline Luge Busan, 205 Gijanghaean-ro, Gijang-gun, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Skyline Luge Busan, 205 Gijanghaean-ro, Gijang-gun, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -850,7 +833,7 @@
 <div class="mobile-card cat-spot">
 <img alt="海東龍宮寺" src="images/海東龍宮寺.jpg"/>
 <div class="card-title">⛩️ 海東龍宮寺</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Haedong Yonggungsa Temple, 86 Yonggung-gil, Gijang-gun, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Haedong Yonggungsa Temple, 86 Yonggung-gil, Gijang-gun, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -860,7 +843,7 @@
 <div class="mobile-card cat-food">
 <img alt="海鮮刀切麵" src="images/海鮮刀切麵.jpg"/>
 <div class="card-title">🍜 海雲台31公分海鮮刀切麵</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Haeundae 31cm Seafood Kalguksu, 46 Gunam-ro 41beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Haeundae 31cm Seafood Kalguksu, 46 Gunam-ro 41beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -870,7 +853,7 @@
 <div class="mobile-card cat-spot">
 <img alt="平交道" src="images/平交道.jpg"/>
 <div class="card-title">🛤️ 青沙浦站灌籃高手平交道</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Cheongsapo railway crossing, Cheongsapo, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Cheongsapo railway crossing, Cheongsapo, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -880,7 +863,7 @@
 <div class="mobile-card cat-food">
 <img alt="DIART COFFEE" src="images/DIART COFFEE.jpg"/>
 <div class="card-title">☕ DIART COFFEE (蜂蜜奶油法棍)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="DIART Coffee, 12 Cheongsapo-ro 128beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="DIART Coffee, 12 Cheongsapo-ro 128beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -890,7 +873,7 @@
 <div class="mobile-card cat-spot">
 <img alt="天空膠囊列車" src="images/天空膠囊列車.jpg"/>
 <div class="card-title">🚟 膠囊列車（青沙浦 to 尾浦)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Haeundae Blueline Park Cheongsapo Station, 116 Cheongsapo-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Haeundae Blueline Park Cheongsapo Station, 116 Cheongsapo-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -900,7 +883,7 @@
 <div class="mobile-card cat-spot">
 <img alt="BUSAN X the SKY" src="images/BUSAN X the SKY.jpg"/>
 <div class="card-title">🏙️ BUSAN X the SKY</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="BUSAN X the SKY, 30 Dalmaji-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="BUSAN X the SKY, 30 Dalmaji-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -910,7 +893,7 @@
 <div class="mobile-card cat-food">
 <img alt="海雲台市場" src="images/海雲台市場.jpg"/>
 <div class="card-title">🍢 海雲台傳統市場</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Haeundae Traditional Market, 22-1 Gunam-ro 41beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Haeundae Traditional Market, 22-1 Gunam-ro 41beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -920,7 +903,7 @@
 <div class="mobile-card cat-spot">
 <img alt="遊艇" src="images/Yacht holic or 鑽石遊艇之旅 (廣安里碼頭).jpg"/>
 <div class="card-title">⛵ Yacht holic 鑽石遊艇之旅</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Yacht Holic, Haeundae, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Yacht Holic, Haeundae, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -930,7 +913,7 @@
 <div class="mobile-card cat-shop">
 <img alt="海雲台大創店 Daiso" src="images/海雲台大創店 Daiso.jpg"/>
 <div class="card-title">🛍️ 海雲台大創店 Daiso</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Daiso Haeundae, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Daiso Haeundae, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -947,7 +930,7 @@
 <div class="mobile-card cat-food">
 <img alt="自然鹽麵包" src="images/自然鹽麵包.jpg"/>
 <div class="card-title">🥐 自然鹽麵包</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Natural Salt Bread, Haeundae, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Natural Salt Bread, Haeundae, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -957,7 +940,7 @@
 <div class="mobile-card cat-spot">
 <img alt="沙灘玩水" src="images/沙灘玩水.jpg"/>
 <div class="card-title">🏖️ 海雲台沙灘玩水</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Haeundae Beach, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Haeundae Beach, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -967,12 +950,12 @@
 <div class="mobile-card cat-logistics" style="margin-bottom:8px;">
 <img alt="Check-out" src="images/Hotel Check-out (海雲台).jpg"/>
 <div class="card-title">🧳 Check-out (Stay Black, Stay Alive)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 <div class="mobile-card cat-spot">
 <img alt="Club D Oasis" src="images/汗蒸幕 (Club D Oasis).jpg"/>
 <div class="card-title">♨️ Club D Oasis 汗蒸幕</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Club D Oasis, 30 Dalmaji-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Club D Oasis, 30 Dalmaji-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -982,7 +965,7 @@
 <div class="mobile-card cat-logistics">
 <img alt="Check-in" src="images/Hotel Check-in (西面).jpg"/>
 <div class="card-title">🏨 Hotel Check-in (西面)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Seomyeon Station, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Seomyeon Station, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -992,7 +975,7 @@
 <div class="mobile-card cat-food">
 <img alt="味贊王" src="images/味贊王 (韓式燒烤).jpg"/>
 <div class="card-title">🥩 味贊王鹽烤肉 (西面)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="맛찬들왕소금구이 서면점, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="맛찬들왕소금구이 서면점, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1002,7 +985,7 @@
 <div class="mobile-card cat-shop">
 <img alt="西面 Shopping" src="images/西面 Shopping.jpg"/>
 <div class="card-title">🛍️ 西面地下街 Shopping</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Seomyeon Underground Shopping Center, 737 Jungang-daero, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Seomyeon Underground Shopping Center, 737 Jungang-daero, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1019,7 +1002,7 @@
 <div class="mobile-card cat-food" style="margin-bottom:8px;">
 <img alt="EGG DROP" src="images/Breakfast EGG DROP (西面樂天後門店).jpg"/>
 <div class="card-title">🥪 EGG DROP (西面樂天店)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Egg Drop Seomyeon Lotte Rear Gate Branch, 12 Bujeon-ro 66beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Egg Drop Seomyeon Lotte Rear Gate Branch, 12 Bujeon-ro 66beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1029,7 +1012,7 @@
 <div class="mobile-card cat-shop">
 <img alt="韓服體驗" src="images/韓服體驗.jpg"/>
 <div class="card-title">👘 哲秀和英熙韓服店</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="철수와영희 한복, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="철수와영희 한복, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1039,7 +1022,7 @@
 <div class="mobile-card cat-spot">
 <img alt="甘川洞文化村" src="images/甘川洞文化村.jpg"/>
 <div class="card-title">🎨 甘川洞文化村</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Gamcheon Culture Village, 203 Gamnae 2-ro, Saha-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Gamcheon Culture Village, 203 Gamnae 2-ro, Saha-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1049,7 +1032,7 @@
 <div class="mobile-card cat-shop">
 <img alt="手翻書" src="images/手翻書.jpg"/>
 <div class="card-title">📖 釜山手翻書</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Busan flip book studio, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Busan flip book studio, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1069,7 +1052,7 @@
 <div class="mobile-card cat-food">
 <img alt="海底貝殼王國" src="images/海底貝殼王國（松島）.jpg"/>
 <div class="card-title">🦪 海底貝殼王國 (松島)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="해저조개왕국, Songdo, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="해저조개왕국, Songdo, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1079,7 +1062,7 @@
 <div class="mobile-card cat-food">
 <img alt="EL16.52" src="images/EL16.52 海景咖啡廳.jpg"/>
 <div class="card-title">☕ EL16.52 海景咖啡廳</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="EL16.52, 177 Amnamgongwon-ro, Seo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="EL16.52, 177 Amnamgongwon-ro, Seo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1089,7 +1072,7 @@
 <div class="mobile-card cat-spot">
 <img alt="松島纜車" src="images/松島海上纜車.jpg"/>
 <div class="card-title">🚡 松島海上纜車</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Busan Air Cruise Songdo Cable Car, 171 Amnamgongwon-ro, Seo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Busan Air Cruise Songdo Cable Car, 171 Amnamgongwon-ro, Seo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1099,7 +1082,7 @@
 <div class="mobile-card cat-food">
 <img alt="83獬豸" src="images/83獬豸.jpg"/>
 <div class="card-title">🥩 83獬豸 (西面總店)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="83해치 광안리점, 59 Millakbondong-ro 19beon-gil, Suyeong-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="83해치 광안리점, 59 Millakbondong-ro 19beon-gil, Suyeong-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1116,12 +1099,12 @@
 <div class="mobile-card cat-food">
 <img alt="松亭3代豬肉湯飯" src="images/松亭3代豬肉湯飯.jpg"/>
 <div class="card-title">🍲 松亭3代豬肉湯飯</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Songjeong 3 Dae Gukbap, 33 Seomyeon-ro 68beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Songjeong 3 Dae Gukbap, 33 Seomyeon-ro 68beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 <div class="mobile-card cat-food">
 <img alt="秀英本家" src="images/秀英本家.jpg"/>
 <div class="card-title">🍲 秀英本家</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="수영본가, Suyeong-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="수영본가, Suyeong-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1131,7 +1114,7 @@
 <div class="mobile-card cat-spot">
 <img alt="ARTE MUSEUM" src="images/ARTE MUSEUM Busan.jpg"/>
 <div class="card-title">🖼️ ARTE MUSEUM</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Arte Museum Busan, 29 Haeyang-ro 247beon-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Arte Museum Busan, 29 Haeyang-ro 247beon-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1141,7 +1124,7 @@
 <div class="mobile-card cat-food">
 <img alt="Burger Yo" src="images/Burger Yo.jpg"/>
 <div class="card-title">🍔 Burger Yo</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Burger Yo, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Burger Yo, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1151,7 +1134,7 @@
 <div class="mobile-card cat-food">
 <img alt="釜山影島P.ARK Cafe & Bakery" src="images/P.ARK Cafe.jpg"/>
 <div class="card-title">☕ 釜山影島P.ARK Cafe & Bakery</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="P.ARK, 180 Haeyang-ro 195beon-gil, Yeongdo-gu, Busan" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="P.ARK, 180 Haeyang-ro 195beon-gil, Yeongdo-gu, Busan" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1161,7 +1144,7 @@
 <div class="mobile-card cat-spot">
 <img alt="白淺灘文化村" src="images/白淺灘文化村.jpg"/>
 <div class="card-title">🌊 白淺灘文化村</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Huinnyeoul Culture Village, 379 Huinnyeoul-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Huinnyeoul Culture Village, 379 Huinnyeoul-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1171,7 +1154,7 @@
 <div class="mobile-card cat-food">
 <img alt="Miffy Cafe Busan(Mipi) in 影島" src="images/Miffy Cafe Busan(Mipi) in 影島.jpg"/>
 <div class="card-title">☕ Miffy Cafe</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Miffy Cafe Busan, 2 Wachi-ro 51beon-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Miffy Cafe Busan, 2 Wachi-ro 51beon-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1181,7 +1164,7 @@
 <div class="mobile-card cat-food">
 <img alt="明星一隻雞 in 影島" src="images/明星一隻雞 in 影島.jpg"/>
 <div class="card-title">🍲 明星一隻雞</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Myeongdong Dakhanmari / chicken restaurant, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Myeongdong Dakhanmari / chicken restaurant, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1191,7 +1174,7 @@
 <div class="mobile-card cat-spot">
 <img alt="釜山塔 (龍頭山公園)" src="images/釜山塔 (龍頭山公園).jpg"/>
 <div class="card-title">🗼 釜山塔 (龍頭山公園)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Busan Tower, Yongdusan Park, 37-55 Yongdusan-gil, Jung-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Busan Tower, Yongdusan Park, 37-55 Yongdusan-gil, Jung-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1201,7 +1184,7 @@
 <div class="mobile-card cat-shop">
 <img alt="樂天百貨" src="images/樂天百貨.jpg"/>
 <div class="card-title">🛍️ 樂天百貨 (光復店)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Lotte Department Store Gwangbok, 2 Jungang-daero, Jung-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Lotte Department Store Gwangbok, 2 Jungang-daero, Jung-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1218,7 +1201,7 @@
 <div class="mobile-card cat-food">
 <img alt="Your Type" src="images/Brunch (Your Type Jeonpo).jpg"/>
 <div class="card-title">🍳 Your Type 早午餐</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Your Type Jeonpo, 33 Dongsung-ro 15beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Your Type Jeonpo, 33 Dongsung-ro 15beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1228,7 +1211,7 @@
 <div class="mobile-card cat-food">
 <img alt="OLD MONT Bagel" src="images/The OLD MONT Bagel.jpg"/>
 <div class="card-title">🥯 OLD MONT Bagel</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="OLD MONT BAGEL Busan, 58 Dongcheon-ro, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="OLD MONT BAGEL Busan, 58 Dongcheon-ro, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1238,7 +1221,7 @@
 <div class="mobile-card cat-food">
 <img alt="三五亭人蔘雞湯" src="images/人蔘雞湯.jpg"/>
 <div class="card-title">🍲 三五亭人蔘雞湯</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Samohjeong Samgyetang, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Samohjeong Samgyetang, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
@@ -1248,209 +1231,36 @@
 <div class="mobile-card cat-spot" style="margin-bottom:8px;">
 <img alt="Running Man" src="images/Running Man.jpg"/>
 <div class="card-title">🏃 Running Man 體驗館 (釜山店)</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Running Man Busan, 10F Samjung Tower, 672 Jungang-daero, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Running Man Busan, 10F Samjung Tower, 672 Jungang-daero, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 <div class="mobile-card cat-logistics">
 <img alt="金海機場" src="images/釜山機場.jpg"/>
 <div class="card-title">🛬 抵達金海國際機場</div>
-<div class="card-links"><a class="map-link" data-map-verified="true" data-query="Gimhae International Airport, 108 Gonghangjinip-ro, Gangseo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
+<div class="card-links"><a class="map-link" data-query="Gimhae International Airport, 108 Gonghangjinip-ro, Gangseo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
 </div>
 </div>
 </div>
 </div>
 </div>
 
-<!-- ===== 3. 釜山全區行程動線互動地圖 ===== -->
-<div class="section-title">🗺️ 釜山行程全區景點與路線圖</div>
-<div class="busan-map-container">
-    <div class="busan-map-legend">
-        <span class="day-legend-tag" style="background: var(--day1-color);">Day 1 海雲台</span>
-        <span class="day-legend-tag" style="background: var(--day2-color);">Day 2 機張/海雲台</span>
-        <span class="day-legend-tag" style="background: var(--day3-color);">Day 3 西面</span>
-        <span class="day-legend-tag" style="background: var(--day4-color);">Day 4 松島/甘川</span>
-        <span class="day-legend-tag" style="background: var(--day5-color);">Day 5 影島/南浦</span>
-        <span class="day-legend-tag" style="background: var(--day6-color);">Day 6 西面/返程</span>
-    </div>
-    
-    <div class="map-svg-wrapper">
-        <svg viewBox="0 0 800 600" width="100%" height="100%">
-            <!-- 箭頭定義 -->
-            <defs>
-                <marker id="arrow-1" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--day1-color)"/>
-                </marker>
-                <marker id="arrow-2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--day2-color)"/>
-                </marker>
-                <marker id="arrow-3" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--day3-color)"/>
-                </marker>
-                <marker id="arrow-4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--day4-color)"/>
-                </marker>
-                <marker id="arrow-5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--day5-color)"/>
-                </marker>
-                <marker id="arrow-6" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--day6-color)"/>
-                </marker>
-            </defs>
+<!-- ===== 3. 自訂 Q 版底圖、景點標記與手機即時 GPS 定位地圖 ===== -->
+<div class="section-title">🗺️ 釜山行程全景點與路線圖</div>
+<div class="busan-map-container" id="busanMapRegion">
+  <!-- 自訂 Q 版底圖 -->
+  <img src="https://ym7226st95g001-ux.github.io/web/Y2026_Busan/images/ChatGPT%20Image%202026%E5%B9%B48%E6%9C%8820%E6%97%A5%20%E4%B8%8A%E5%8D%8812_09_17.png" alt="釜山行程地圖" class="busan-map-bg">
 
-            <!-- 陸地背景繪製 (釜山簡圖) -->
-            <path d="M 100,100 L 250,50 L 500,80 L 750,150 L 780,350 L 650,400 L 520,380 L 450,450 L 380,550 L 250,520 L 200,400 L 100,300 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-            <!-- 影島 (島嶼) -->
-            <path d="M 370,410 C 420,410 430,480 390,500 C 350,510 330,450 370,410 Z" fill="#f1f5f9" stroke="#94a3b8" stroke-width="2"/>
+  <!-- 景點標記點 -->
+  <div class="map-marker" style="left: 28%; top: 68%;"><div class="marker-icon"></div><div class="marker-label">南浦洞 / 扎嘎其</div></div>
+  <div class="map-marker" style="left: 45%; top: 52%;"><div class="marker-icon"></div><div class="marker-label">西面商圈</div></div>
+  <div class="map-marker" style="left: 68%; top: 58%;"><div class="marker-icon"></div><div class="marker-label">廣安里海灘</div></div>
+  <div class="map-marker" style="left: 82%; top: 46%;"><div class="marker-icon"></div><div class="marker-label">海雲台海灘</div></div>
+  <div class="map-marker" style="left: 88%; top: 32%;"><div class="marker-icon"></div><div class="marker-label">海東龍宮寺</div></div>
 
-            <!-- 區域標籤註記 -->
-            <text x="130" y="220" fill="#94a3b8" font-size="16" font-weight="bold">金海機場</text>
-            <text x="350" y="270" fill="#94a3b8" font-size="16" font-weight="bold">西面</text>
-            <text x="600" y="280" fill="#94a3b8" font-size="16" font-weight="bold">海雲台</text>
-            <text x="700" y="160" fill="#94a3b8" font-size="16" font-weight="bold">機張</text>
-            <text x="270" y="440" fill="#94a3b8" font-size="16" font-weight="bold">松島 / 甘川</text>
-            <text x="380" y="450" fill="#94a3b8" font-size="16" font-weight="bold">影島</text>
-
-            <!-- ===== Day 1 路線 (紅色) ===== -->
-            <path d="M 150,220 L 580,280 L 610,290 L 590,300 L 640,280" class="map-path" stroke="var(--day1-color)" marker-end="url(#arrow-1)"/>
-            
-            <!-- ===== Day 2 路線 (藍色) ===== -->
-            <path d="M 600,270 L 670,250 L 710,180 L 730,160 L 630,280 L 680,260 L 660,265 L 610,285 L 620,295 C 620,295 560,340 550,330" class="map-path" stroke="var(--day2-color)" marker-end="url(#arrow-2)"/>
-
-            <!-- ===== Day 3 路線 (綠色) ===== -->
-            <path d="M 600,280 L 610,290 L 620,285 L 360,280 L 370,290" class="map-path" stroke="var(--day3-color)" marker-end="url(#arrow-3)"/>
-
-            <!-- ===== Day 4 路線 (橘色) ===== -->
-            <path d="M 360,270 L 290,400 L 300,410 L 270,460 L 260,470 L 250,465 L 360,285" class="map-path" stroke="var(--day4-color)" marker-end="url(#arrow-4)"/>
-
-            <!-- ===== Day 5 路線 (紫色) ===== -->
-            <path d="M 360,280 L 400,420 L 410,430 L 390,460 L 370,450 L 380,440 L 350,410 L 340,390" class="map-path" stroke="var(--day5-color)" marker-end="url(#arrow-5)"/>
-
-            <!-- ===== Day 6 路線 (粉色) ===== -->
-            <path d="M 360,270 L 370,275 L 365,285 L 355,290 L 150,220" class="map-path" stroke="var(--day6-color)" marker-end="url(#arrow-6)"/>
-
-            <!-- ===== 景點座標點位 Markers ===== -->
-            <!-- Day 1 (紅) -->
-            <g class="map-marker" data-name="🛬 金海國際機場" data-time="18:00 (Day 1)" data-query="Gimhae International Airport, Busan" transform="translate(150, 220)">
-                <circle r="8" fill="var(--day1-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">1</text>
-            </g>
-            <g class="map-marker" data-name="🏨 海雲台飯店" data-time="19:00 (Day 1)" data-query="Stay Black Stay Alive Haeundae Busan" transform="translate(580, 280)">
-                <circle r="8" fill="var(--day1-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">1</text>
-            </g>
-            <g class="map-marker" data-name="🥩 廣安木燒肉" data-time="20:00 (Day 1)" data-query="광안목 Busan" transform="translate(550, 320)">
-                <circle r="8" fill="var(--day1-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">1</text>
-            </g>
-            <g class="map-marker" data-name="🌃 The Bay 101" data-time="21:00 (Day 1)" data-query="The Bay 101 Busan" transform="translate(590, 300)">
-                <circle r="8" fill="var(--day1-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">1</text>
-            </g>
-
-            <!-- Day 2 (藍) -->
-            <g class="map-marker" data-name="🚃 海岸列車(尾浦)" data-time="10:00 (Day 2)" data-query="Haeundae Blueline Park Mipo Station" transform="translate(620, 280)">
-                <circle r="8" fill="var(--day2-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">2</text>
-            </g>
-            <g class="map-marker" data-name="🏎️ Skyline Luge" data-time="11:00 (Day 2)" data-query="Skyline Luge Busan" transform="translate(710, 180)">
-                <circle r="8" fill="var(--day2-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">2</text>
-            </g>
-            <g class="map-marker" data-name="⛩️ 海東龍宮寺" data-time="12:00 (Day 2)" data-query="Haedong Yonggungsa Temple Busan" transform="translate(730, 160)">
-                <circle r="8" fill="var(--day2-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">2</text>
-            </g>
-            <g class="map-marker" data-name="🛤️ 青沙浦平交道" data-time="14:00 (Day 2)" data-query="Cheongsapo railway crossing Busan" transform="translate(680, 260)">
-                <circle r="8" fill="var(--day2-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">2</text>
-            </g>
-            <g class="map-marker" data-name="🏙️ BUSAN X the SKY" data-time="17:00 (Day 2)" data-query="BUSAN X the SKY" transform="translate(610, 285)">
-                <circle r="8" fill="var(--day2-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">2</text>
-            </g>
-            <g class="map-marker" data-name="⛵ Yacht Holic 遊艇" data-time="19:00 (Day 2)" data-query="Yacht Holic Busan" transform="translate(550, 330)">
-                <circle r="8" fill="var(--day2-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">2</text>
-            </g>
-
-            <!-- Day 3 (綠) -->
-            <g class="map-marker" data-name="🏖️ 海雲台沙灘" data-time="10:00 (Day 3)" data-query="Haeundae Beach Busan" transform="translate(600, 280)">
-                <circle r="8" fill="var(--day3-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">3</text>
-            </g>
-            <g class="map-marker" data-name="♨️ Club D Oasis" data-time="11:00 (Day 3)" data-query="Club D Oasis Busan" transform="translate(620, 285)">
-                <circle r="8" fill="var(--day3-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">3</text>
-            </g>
-            <g class="map-marker" data-name="🏨 西面飯店" data-time="15:00 (Day 3)" data-query="Seomyeon Station Busan" transform="translate(360, 280)">
-                <circle r="8" fill="var(--day3-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">3</text>
-            </g>
-            <g class="map-marker" data-name="🥩 味贊王鹽烤肉" data-time="16:00 (Day 3)" data-query="맛찬들왕소금구이 서면점 Busan" transform="translate(370, 290)">
-                <circle r="8" fill="var(--day3-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">3</text>
-            </g>
-
-            <!-- Day 4 (橘) -->
-            <g class="map-marker" data-name="👘 哲秀和英熙韓服" data-time="10:00 (Day 4)" data-query="철수와영희 한복 Busan" transform="translate(360, 270)">
-                <circle r="8" fill="var(--day4-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">4</text>
-            </g>
-            <g class="map-marker" data-name="🎨 甘川洞文化村" data-time="11:00 (Day 4)" data-query="Gamcheon Culture Village Busan" transform="translate(290, 400)">
-                <circle r="8" fill="var(--day4-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">4</text>
-            </g>
-            <g class="map-marker" data-name="🦪 海底貝殼王國" data-time="14:00 (Day 4)" data-query="해저조개왕국 Songdo Busan" transform="translate(270, 460)">
-                <circle r="8" fill="var(--day4-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">4</text>
-            </g>
-            <g class="map-marker" data-name="☕ EL16.52 咖啡" data-time="16:00 (Day 4)" data-query="EL16.52 177 Amnamgongwon-ro Seo-gu Busan" transform="translate(260, 470)">
-                <circle r="8" fill="var(--day4-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">4</text>
-            </g>
-            <g class="map-marker" data-name="🚡 松島海上纜車" data-time="17:00 (Day 4)" data-query="Songdo Cable Car Busan" transform="translate(250, 465)">
-                <circle r="8" fill="var(--day4-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">4</text>
-            </g>
-
-            <!-- Day 5 (紫) -->
-            <g class="map-marker" data-name="🖼️ ARTE MUSEUM" data-time="10:00 (Day 5)" data-query="Arte Museum Busan" transform="translate(400, 420)">
-                <circle r="8" fill="var(--day5-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5</text>
-            </g>
-            <g class="map-marker" data-name="☕ P.ARK Cafe" data-time="13:00 (Day 5)" data-query="P.ARK 180 Haeyang-ro 195beon-gil Yeongdo-gu Busan" transform="translate(410, 430)">
-                <circle r="8" fill="var(--day5-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5</text>
-            </g>
-            <g class="map-marker" data-name="🌊 白淺灘文化村" data-time="15:00 (Day 5)" data-query="Huinnyeoul Culture Village Busan" transform="translate(370, 450)">
-                <circle r="8" fill="var(--day5-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5</text>
-            </g>
-            <g class="map-marker" data-name="🗼 釜山塔" data-time="19:00 (Day 5)" data-query="Busan Tower Yongdusan Park" transform="translate(350, 410)">
-                <circle r="8" fill="var(--day5-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">5</text>
-            </g>
-
-            <!-- Day 6 (粉) -->
-            <g class="map-marker" data-name="🍳 Your Type 早午餐" data-time="09:00 (Day 6)" data-query="Your Type Jeonpo Busan" transform="translate(360, 270)">
-                <circle r="8" fill="var(--day6-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">6</text>
-            </g>
-            <g class="map-marker" data-name="🏃 Running Man 體驗館" data-time="15:00 (Day 6)" data-query="Running Man Busan Samjung Tower" transform="translate(355, 290)">
-                <circle r="8" fill="var(--day6-color)"/>
-                <text y="4" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">6</text>
-            </g>
-        </svg>
-        
-        <!-- Hover 浮動提示框 -->
-        <div class="map-tooltip" id="mapTooltip">
-            <h4 id="tooltipTitle">景點名稱</h4>
-            <div id="tooltipTime" style="color: #cbd5e1; font-size: 0.7rem;">時間資訊</div>
-            <div class="map-tooltip-links">
-                <a href="#" id="tooltipGmap" class="map-tooltip-btn" target="_blank">Google 地圖</a>
-                <a href="#" id="tooltipAmap" class="map-tooltip-btn apple" target="_blank">Apple 地圖</a>
-            </div>
-        </div>
-    </div>
+  <!-- 我的定位標籤 -->
+  <div id="userMarker" class="user-location-marker">
+    <div class="user-dot"></div>
+    <div class="user-label">我的位置</div>
+  </div>
 </div>
 
 <script>
@@ -1520,6 +1330,28 @@
             highlightSummaryColumn(dayNum);
         }
 
+        // 即時 GPS 定位邏輯
+        const BUSAN_BOUNDS = { minLat: 35.050, maxLat: 35.250, minLng: 128.950, maxLng: 129.250 };
+
+        function updateUserPosition(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            if (lat >= BUSAN_BOUNDS.minLat && lat <= BUSAN_BOUNDS.maxLat &&
+                lng >= BUSAN_BOUNDS.minLng && lng <= BUSAN_BOUNDS.maxLng) {
+                
+                const leftPercent = ((lng - BUSAN_BOUNDS.minLng) / (BUSAN_BOUNDS.maxLng - BUSAN_BOUNDS.minLng)) * 100;
+                const topPercent = (1 - ((lat - BUSAN_BOUNDS.minLat) / (BUSAN_BOUNDS.maxLat - BUSAN_BOUNDS.minLat))) * 100;
+
+                const userMarker = document.getElementById('userMarker');
+                if (userMarker) {
+                    userMarker.style.left = leftPercent + '%';
+                    userMarker.style.top = topPercent + '%';
+                    userMarker.style.display = 'flex';
+                }
+            }
+        }
+
         // 初始化與滑動監聽
         document.addEventListener('DOMContentLoaded', () => {
             setMapProvider('gmap');
@@ -1549,67 +1381,9 @@
                 });
             }
 
-            // ===== 底部 SVG 互動地圖滑鼠浮動提示 (Tooltip) =====
-            const markers = document.querySelectorAll('.map-marker');
-            const tooltip = document.getElementById('mapTooltip');
-            const tooltipTitle = document.getElementById('tooltipTitle');
-            const tooltipTime = document.getElementById('tooltipTime');
-            const tooltipGmap = document.getElementById('tooltipGmap');
-            const tooltipAmap = document.getElementById('tooltipAmap');
-            const mapWrapper = document.querySelector('.map-svg-wrapper');
-
-            markers.forEach(marker => {
-                marker.addEventListener('mouseenter', (e) => {
-                    const name = marker.getAttribute('data-name');
-                    const time = marker.getAttribute('data-time');
-                    const query = marker.getAttribute('data-query');
-
-                    tooltipTitle.textContent = name;
-                    tooltipTime.textContent = `⏰ ${time}`;
-                    tooltipGmap.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-                    tooltipAmap.href = `https://maps.apple.com/search?query=${encodeURIComponent(query)}`;
-
-                    tooltip.style.display = 'block';
-                });
-
-                marker.addEventListener('mousemove', (e) => {
-                    const rect = mapWrapper.getBoundingClientRect();
-                    const x = e.clientX - rect.left + 10;
-                    const y = e.clientY - rect.top - 70;
-
-                    tooltip.style.left = `${Math.min(x, rect.width - 180)}px`;
-                    tooltip.style.top = `${Math.max(10, y)}px`;
-                });
-
-                marker.addEventListener('mouseleave', () => {
-                    tooltip.style.display = 'none';
-                });
-
-                // 支援行動裝置觸控
-                marker.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const name = marker.getAttribute('data-name');
-                    const time = marker.getAttribute('data-time');
-                    const query = marker.getAttribute('data-query');
-
-                    tooltipTitle.textContent = name;
-                    tooltipTime.textContent = `⏰ ${time}`;
-                    tooltipGmap.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-                    tooltipAmap.href = `https://maps.apple.com/search?query=${encodeURIComponent(query)}`;
-
-                    const rect = mapWrapper.getBoundingClientRect();
-                    const x = e.clientX - rect.left + 10;
-                    const y = e.clientY - rect.top - 70;
-
-                    tooltip.style.left = `${Math.min(x, rect.width - 180)}px`;
-                    tooltip.style.top = `${Math.max(10, y)}px`;
-                    tooltip.style.display = 'block';
-                });
-            });
-
-            document.addEventListener('click', () => {
-                if (tooltip) tooltip.style.display = 'none';
-            });
+            if ("geolocation" in navigator) {
+                navigator.geolocation.watchPosition(updateUserPosition, null, { enableHighAccuracy: true });
+            }
         });
     </script>
 </body>
