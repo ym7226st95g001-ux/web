@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" name="viewport"/>
 <meta content="no-referrer" name="referrer"/>
-<title>釜山 6天5夜自由行行程總表</title>
+<title>釜山 6天5夜自由行行程總表與景點地圖</title>
 <style>
         :root {
             --primary: #0077b6;
@@ -30,7 +29,7 @@
             --cat-logistics-text: #166534;
             --cat-logistics-border: #bbf7d0;
 
-            /* ===== 每日行程代表顏色 ===== */
+            /* ===== 天數顏色（地圖標籤用） ===== */
             --day1-color: #ef4444;
             --day2-color: #3b82f6;
             --day3-color: #10b981;
@@ -151,13 +150,13 @@
             font-size: 1rem;
             font-weight: bold;
             color: var(--header-bg);
-            margin: 12px 0 8px 0;
+            margin: 16px 0 8px 0;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        /* ===== 通用表格容器 (手機一頁呈現優化) ===== */
+        /* ===== 通用表格容器 (手機一頁呈現優影) ===== */
         .table-container {
             width: 100%;
             overflow-x: hidden;
@@ -279,92 +278,94 @@
             background: var(--bg-light);
             padding: 6px 2px;
         }
-        .mobile-view {
-            display: block;
+
+        /* ===== 自訂圖片背景地圖區域樣式 ===== */
+        .custom-map-container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 12px;
+            margin-top: 15px;
+            margin-bottom: 25px;
         }
 
-        /* ===== 自訂 Q 版地圖容器與標記樣式 ===== */
-        .busan-map-container {
+        .custom-map-wrapper {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin: 20px auto 30px auto;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 8px;
             overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-            background-color: #f5f5f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
         }
 
-        .busan-map-bg {
+        .bg-map-img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .map-marker {
+        /* 地圖點位標記 (Overlay) */
+        .map-pin {
             position: absolute;
             transform: translate(-50%, -50%);
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            padding: 3px 8px;
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
             z-index: 10;
         }
 
-        .marker-icon {
-            width: 12px;
-            height: 12px;
-            background-color: #e74c3c;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .marker-label {
-            background-color: rgba(255, 255, 255, 0.92);
-            color: #2c3e50;
-            font-size: 11px;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-top: 3px;
-            white-space: nowrap;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        .user-location-marker {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: none;
-            flex-direction: column;
-            align-items: center;
+        .map-pin:hover {
+            transform: translate(-50%, -50%) scale(1.1);
             z-index: 20;
         }
 
-        .user-dot {
-            width: 14px;
-            height: 14px;
-            background-color: #2980b9;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.4);
-            animation: pulse 1.8s infinite;
+        .map-pin .pin-icon {
+            margin-right: 3px;
         }
 
-        .user-label {
-            background-color: #2980b9;
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 6px;
+        .pin-d1 { background-color: var(--day1-color); border: 1.5px solid #fff; }
+        .pin-d2 { background-color: var(--day2-color); border: 1.5px solid #fff; }
+        .pin-d3 { background-color: var(--day3-color); border: 1.5px solid #fff; }
+        .pin-d4 { background-color: var(--day4-color); border: 1.5px solid #fff; }
+        .pin-d5 { background-color: var(--day5-color); border: 1.5px solid #fff; }
+        .pin-d6 { background-color: var(--day6-color); border: 1.5px solid #fff; }
+
+        .day-route-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .day-route-card {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 8px 12px;
             border-radius: 4px;
-            margin-top: 3px;
-            white-space: nowrap;
+            font-size: 0.78rem;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0px rgba(41, 128, 185, 0.6); }
-            70% { box-shadow: 0 0 0 10px rgba(41, 128, 185, 0); }
-            100% { box-shadow: 0 0 0 0px rgba(41, 128, 185, 0); }
+        .day-route-card h4 {
+            color: var(--header-bg);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .day-route-card p {
+            color: #475569;
+            line-height: 1.4;
         }
 
         @media screen and (max-width: 960px) {
@@ -464,25 +465,10 @@
                 border: 1px solid var(--border-color);
             }
 
-            .mobile-card.cat-food {
-                background-color: var(--cat-food-bg);
-                border-color: var(--cat-food-border);
-            }
-
-            .mobile-card.cat-spot {
-                background-color: var(--cat-spot-bg);
-                border-color: var(--cat-spot-border);
-            }
-
-            .mobile-card.cat-shop {
-                background-color: var(--cat-shop-bg);
-                border-color: var(--cat-shop-border);
-            }
-
-            .mobile-card.cat-logistics {
-                background-color: var(--cat-logistics-bg);
-                border-color: var(--cat-logistics-border);
-            }
+            .mobile-card.cat-food { background-color: var(--cat-food-bg); border-color: var(--cat-food-border); }
+            .mobile-card.cat-spot { background-color: var(--cat-spot-bg); border-color: var(--cat-spot-border); }
+            .mobile-card.cat-shop { background-color: var(--cat-shop-bg); border-color: var(--cat-shop-border); }
+            .mobile-card.cat-logistics { background-color: var(--cat-logistics-bg); border-color: var(--cat-logistics-border); }
 
             .mobile-card img {
                 width: 100%;
@@ -503,32 +489,26 @@
             .mobile-card.cat-shop .card-title { color: var(--cat-shop-text); }
             .mobile-card.cat-logistics .card-title { color: var(--cat-logistics-text); }
 
-            .mobile-card .card-links a {
-                font-size: 0.75rem;
-                padding: 5px 12px;
-                text-decoration: none;
-                background: #ffffff;
-                color: #333;
-                border-radius: 4px;
-                font-weight: bold;
-                display: inline-block;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-                transition: all 0.2s;
+            .map-pin {
+                font-size: 0.55rem;
+                padding: 2px 4px;
             }
         }
-    </style>
+</style>
 </head>
 <body>
 <div class="header-title">
 <h1>🇰🇷 釜山 6天5夜自由行行程總表</h1>
 <p>出發日期：2026.08.23 ～ 2026.08.28｜地圖導航雙模式</p>
 </div>
+
 <!-- ===== 地圖切換按鈕區塊 ===== -->
 <div class="map-selector-container">
 <span class="map-selector-label">🗺️ 地圖切換：</span>
 <button class="map-btn active-gmap" id="btn-gmap" onclick="setMapProvider('gmap')">Google Maps</button>
 <button class="map-btn" id="btn-amap" onclick="setMapProvider('amap')">Apple Maps</button>
 </div>
+
 <!-- 圖例與標籤說明 -->
 <div class="color-legend">
 <div class="legend-item"><span class="legend-dot food"></span> 餐飲美食</div>
@@ -536,6 +516,7 @@
 <div class="legend-item"><span class="legend-dot shop"></span> 購物體驗</div>
 <div class="legend-item"><span class="legend-dot logistics"></span> 交通/飯店</div>
 </div>
+
 <!-- ===== 1. 精簡總覽表 ===== -->
 <div class="section-title">📋 精簡行程總覽</div>
 <div class="table-container">
@@ -566,9 +547,7 @@
 <td></td>
 <td><div class="summary-item cat-food"><span class="icon">🥣</span> 大海鮑魚粥</div></td>
 <td><div class="summary-item cat-food"><span class="icon">🥐</span> 自然鹽麵包</div></td>
-<td>
-<div class="summary-item cat-food"><span class="icon">🥪</span> EGG DROP</div>
-</td>
+<td><div class="summary-item cat-food"><span class="icon">🥪</span> EGG DROP</div></td>
 <td>
 <div class="summary-item cat-food"><span class="icon">🍲</span> 松亭3代豬肉湯飯</div>
 <div class="summary-item cat-food"><span class="icon">🍲</span> OR 秀英本家</div>
@@ -617,7 +596,7 @@
 <td><div class="summary-item cat-food"><span class="icon">🍜</span> 31公分海鮮刀切麵</div></td>
 <td></td>
 <td><div class="summary-item cat-logistics"><span class="icon">🚕</span> 搭乘 Uber</div></td>
-<td><div class="summary-item cat-food"><span class="icon">☕</span>P.ARK Cafe & Bakery</div></td>
+<td><div class="summary-item cat-food"><span class="icon">☕</span> P.ARK Cafe & Bakery</div></td>
 <td></td>
 </tr>
 <tr>
@@ -670,40 +649,34 @@
 </tr>
 <tr>
 <td class="time-cell">19:00</td>
-<td><div class="summary-item cat-logistics"><span class="icon">🏨</span> 海雲台 Check-in (Stay Black, Stay Alive)</div></td>
+<td><div class="summary-item cat-logistics"><span class="icon">🏨</span> 海雲台 Check-in</div></td>
 <td><div class="summary-item cat-spot"><span class="icon">⛵</span> 鑽石遊艇之旅</div></td>
 <td></td>
 <td><div class="summary-item cat-food"><span class="icon">🥩</span> 83獬豸 (西面總店)</div></td>
 <td><div class="summary-item cat-spot"><span class="icon">🗼</span> 釜山塔 (龍頭山公園)</div></td>
-<td> <div class="summary-item cat-logistics"><span class="icon">🛫</span> 釜山起飛 (19:10)</div> </td>
+<td><div class="summary-item cat-logistics"><span class="icon">🛫</span> 釜山起飛 (19:10)</div></td>
 </tr>
 <tr>
 <td class="time-cell">20:00</td>
-<td>
-<div class="summary-item cat-food"><span class="icon">🥩</span> 廣安木 / 韓式牛料理</div>
-</td>
+<td><div class="summary-item cat-food"><span class="icon">🥩</span> 廣安木 / 韓式牛</div></td>
 <td></td>
 <td></td>
 <td></td>
 <td><div class="summary-item cat-shop"><span class="icon">🛍️</span> 樂天百貨</div></td>
-<td><div class="summary-item cat-logistics"><span class="icon">🛬</span> Arrive Taiwan (20:35)</div> </td>
+<td><div class="summary-item cat-logistics"><span class="icon">🛬</span> 返抵台灣 (20:35)</div></td>
 </tr>
 <tr>
 <td class="time-cell">21:00</td>
-<td>
-<div class="summary-item cat-spot"><span class="icon">🌃</span> The Bay 101</div>
-</td>
+<td><div class="summary-item cat-spot"><span class="icon">🌃</span> The Bay 101</div></td>
 <td><div class="summary-item cat-shop"><span class="icon">🛍️</span> 海雲台 Daiso</div></td>
 <td></td>
 <td></td>
 <td><div class="summary-item cat-shop"><span class="icon">🛍️</span> 樂天超市</div></td>
-<td> </td>
+<td></td>
 </tr>
 <tr>
 <td class="time-cell">22:00</td>
-<td>
-<div class="summary-item cat-shop"><span class="icon">🛒</span> 海雲台 E-mart</div>
-</td>
+<td><div class="summary-item cat-shop"><span class="icon">🛒</span> 海雲台 E-mart</div></td>
 <td></td>
 <td></td>
 <td></td>
@@ -713,558 +686,168 @@
 </tbody>
 </table>
 </div>
-<!-- ===== 手機版單日行程卡片視圖 ===== -->
+
+<!-- ===== 2. 每日詳細行程與導航 ===== -->
 <div class="section-title">📸 每日詳細行程與導航</div>
 <div class="mobile-tabs">
-<button class="tab-btn active" onclick="switchDay(1)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 1 (8/23)</button>
-<button class="tab-btn" onclick="switchDay(2)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 2 (8/24)</button>
-<button class="tab-btn" onclick="switchDay(3)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 3 (8/25)</button>
-<button class="tab-btn" onclick="switchDay(4)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 4 (8/26)</button>
-<button class="tab-btn" onclick="switchDay(5)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 5 (8/27)</button>
-<button class="tab-btn" onclick="switchDay(6)" style="flex: 1; min-width: 0; padding: 6px 2px; font-size: 0.72rem;">Day 6 (8/28)</button>
+<button class="tab-btn active" onclick="switchDay(1)">Day 1 (8/23)</button>
+<button class="tab-btn" onclick="switchDay(2)">Day 2 (8/24)</button>
+<button class="tab-btn" onclick="switchDay(3)">Day 3 (8/25)</button>
+<button class="tab-btn" onclick="switchDay(4)">Day 4 (8/26)</button>
+<button class="tab-btn" onclick="switchDay(5)">Day 5 (8/27)</button>
+<button class="tab-btn" onclick="switchDay(6)">Day 6 (8/28)</button>
 </div>
+
 <div class="mobile-view" id="mobileView">
 <!-- Day 1 -->
 <div class="day-schedule" id="day-1">
-<div class="day-header">
-<span>Day 1 (8/23 日)</span>
-<span class="region-tag">海雲台</span>
+<div class="day-header"><span>Day 1 (8/23 日)</span><span class="region-tag">海雲台</span></div>
+<div class="timeline-item"><div class="timeline-time">14:00</div><div class="timeline-content"><div class="mobile-card cat-logistics"><div class="card-title">🛫 桃園出發 (14:40)</div><div class="card-links"><a class="map-link" data-query="Taoyuan International Airport" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">18:00</div><div class="timeline-content"><div class="mobile-card cat-logistics"><div class="card-title">🛬 抵達釜山 (18:00)</div><div class="card-links"><a class="map-link" data-query="Gimhae International Airport" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">19:00</div><div class="timeline-content"><div class="mobile-card cat-logistics"><div class="card-title">🏨 海雲台 Check-in (Stay Black, Stay Alive)</div><div class="card-links"><a class="map-link" data-query="322 Haeundaehaebyeon-ro, Haeundae-gu, Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">20:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥩 廣安木 / Jinwoorin Haejang</div><div class="card-links"><a class="map-link" data-query="광안목, Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">21:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🌃 The Bay 101</div><div class="card-links"><a class="map-link" data-query="The Bay 101, Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">22:00</div><div class="timeline-content"><div class="mobile-card cat-shop"><div class="card-title">🛒 海雲台 E-mart</div><div class="card-links"><a class="map-link" data-query="Emart Haeundae" target="_blank">📍 載入中...</a></div></div></div></div>
 </div>
-<div class="timeline-item">
-<div class="timeline-time">14:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-logistics">
-<img alt="桃園機場" src="images/桃園機場.jpg"/>
-<div class="card-title">🛫 桃園出發 (14:40)</div>
-<div class="card-links"><a class="map-link" data-query="Taoyuan International Airport, Dayuan District, Taoyuan City, Taiwan" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">18:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-logistics">
-<img alt="釜山機場" src="images/釜山機場.jpg"/>
-<div class="card-title">🛬 抵達釜山 (18:00)</div>
-<div class="card-links"><a class="map-link" data-query="Gimhae International Airport, 108 Gonghangjinip-ro, Gangseo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">19:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-logistics">
-<img alt="Stay Black, Stay Alive" src="images/moon.jpg"/>
-<div class="card-title">🏨 海雲台 Check-in (Stay Black, Stay Alive)</div>
-<div class="card-links"><a class="map-link" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">20:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="Dinner廣安木（韓式烤肉）" src="images/Dinner廣安木（韓式烤肉）.jpg"/>
-<div class="card-title">🥩 廣安木（韓式烤肉）or Jinwoorin Haejang（韓式牛料理）</div>
-<div class="card-links"><a class="map-link" data-query="광안목, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">21:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="The Bay 101" src="images/The Bay 101.jpg"/>
-<div class="card-title">🌃 The Bay 101 夜景</div>
-<div class="card-links"><a class="map-link" data-query="The Bay 101, 52 Dongbaek-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">22:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-shop">
-<img alt="海雲台E-mart" src="images/海雲台E-mart.jpg"/>
-<div class="card-title">🛒 海雲台 E-mart</div>
-<div class="card-links"><a class="map-link" data-query="Emart Haeundae, 511 Jwadong-sunhwan-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Day 2 -->
 <div class="day-schedule" id="day-2">
-<div class="day-header">
-<span>Day 2 (8/24 一)</span>
-<span class="region-tag">海雲台</span>
+<div class="day-header"><span>Day 2 (8/24 一)</span><span class="region-tag">海雲台 / 機張</span></div>
+<div class="timeline-item"><div class="timeline-time">09:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥣 大海鮑魚粥</div><div class="card-links"><a class="map-link" data-query="Bada Maru Abalone Porridge, Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">10:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🚃 海岸列車 (尾浦 to 松亭站)</div><div class="card-links"><a class="map-link" data-query="Haeundae Blueline Park Mipo Station" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">11:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🏎️ Skyline Luge Busan</div><div class="card-links"><a class="map-link" data-query="Skyline Luge Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">12:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">⛩️ 海東龍宮寺</div><div class="card-links"><a class="map-link" data-query="Haedong Yonggungsa Temple" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">13:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍜 海雲台31公分海鮮刀切麵</div><div class="card-links"><a class="map-link" data-query="Haeundae 31cm Seafood Kalguksu" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">14:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🛤️ 青沙浦站灌籃高手平交道</div><div class="card-links"><a class="map-link" data-query="Cheongsapo railway crossing, Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">15:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">☕ DIART COFFEE</div><div class="card-links"><a class="map-link" data-query="DIART Coffee Cheongsapo" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">16:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🚟 膠囊列車（青沙浦 to 尾浦)</div><div class="card-links"><a class="map-link" data-query="Cheongsapo Station Blueline Park" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">17:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🏙️ BUSAN X the SKY</div><div class="card-links"><a class="map-link" data-query="BUSAN X the SKY" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">18:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍢 海雲台傳統市場</div><div class="card-links"><a class="map-link" data-query="Haeundae Traditional Market" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">19:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">⛵ Yacht holic 鑽石遊艇之旅</div><div class="card-links"><a class="map-link" data-query="Yacht Holic, Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">21:00</div><div class="timeline-content"><div class="mobile-card cat-shop"><div class="card-title">🛍️ 海雲台大創店 Daiso</div><div class="card-links"><a class="map-link" data-query="Daiso Haeundae" target="_blank">📍 載入中...</a></div></div></div></div>
 </div>
-<div class="timeline-item">
-<div class="timeline-time">09:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="大海鮑魚粥" src="images/大海鮑魚粥.jpg"/>
-<div class="card-title">🥣 大海鮑魚粥</div>
-<div class="card-links"><a class="map-link" data-query="Bada Maru Abalone Porridge, 7 Dalmaji-gil 62beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">10:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="海岸列車" src="images/海岸列車.jpg"/>
-<div class="card-title">🚃 海岸列車 (尾浦 to 松亭站)</div>
-<div class="card-links"><a class="map-link" data-query="35.0788, 129.0652" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">11:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="Skyline Luge" src="images/Skyline Luge.jpg"/>
-<div class="card-title">🏎️ Skyline Luge Busan</div>
-<div class="card-links"><a class="map-link" data-query="Skyline Luge Busan, 205 Gijanghaean-ro, Gijang-gun, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">12:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="海東龍宮寺" src="images/海東龍宮寺.jpg"/>
-<div class="card-title">⛩️ 海東龍宮寺</div>
-<div class="card-links"><a class="map-link" data-query="Haedong Yonggungsa Temple, 86 Yonggung-gil, Gijang-gun, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">13:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="海鮮刀切麵" src="images/海鮮刀切麵.jpg"/>
-<div class="card-title">🍜 海雲台31公分海鮮刀切麵</div>
-<div class="card-links"><a class="map-link" data-query="Haeundae 31cm Seafood Kalguksu, 46 Gunam-ro 41beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">14:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="平交道" src="images/平交道.jpg"/>
-<div class="card-title">🛤️ 青沙浦站灌籃高手平交道</div>
-<div class="card-links"><a class="map-link" data-query="Cheongsapo railway crossing, Cheongsapo, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">15:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="DIART COFFEE" src="images/DIART COFFEE.jpg"/>
-<div class="card-title">☕ DIART COFFEE (蜂蜜奶油法棍)</div>
-<div class="card-links"><a class="map-link" data-query="DIART Coffee, 12 Cheongsapo-ro 128beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">16:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="天空膠囊列車" src="images/天空膠囊列車.jpg"/>
-<div class="card-title">🚟 膠囊列車（青沙浦 to 尾浦)</div>
-<div class="card-links"><a class="map-link" data-query="Haeundae Blueline Park Cheongsapo Station, 116 Cheongsapo-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">17:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="BUSAN X the SKY" src="images/BUSAN X the SKY.jpg"/>
-<div class="card-title">🏙️ BUSAN X the SKY</div>
-<div class="card-links"><a class="map-link" data-query="BUSAN X the SKY, 30 Dalmaji-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">18:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="海雲台市場" src="images/海雲台市場.jpg"/>
-<div class="card-title">🍢 海雲台傳統市場</div>
-<div class="card-links"><a class="map-link" data-query="Haeundae Traditional Market, 22-1 Gunam-ro 41beon-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">19:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="遊艇" src="images/Yacht holic or 鑽石遊艇之旅 (廣安里碼頭).jpg"/>
-<div class="card-title">⛵ Yacht holic 鑽石遊艇之旅</div>
-<div class="card-links"><a class="map-link" data-query="Yacht Holic, Haeundae, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">21:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-shop">
-<img alt="海雲台大創店 Daiso" src="images/海雲台大創店 Daiso.jpg"/>
-<div class="card-title">🛍️ 海雲台大創店 Daiso</div>
-<div class="card-links"><a class="map-link" data-query="Daiso Haeundae, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Day 3 -->
 <div class="day-schedule" id="day-3">
-<div class="day-header">
-<span>Day 3 (8/25 二)</span>
-<span class="region-tag">西面</span>
+<div class="day-header"><span>Day 3 (8/25 二)</span><span class="region-tag">西面</span></div>
+<div class="timeline-item"><div class="timeline-time">09:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥐 自然鹽麵包</div><div class="card-links"><a class="map-link" data-query="Natural Salt Bread Haeundae" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">10:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🏖️ 海雲台沙灘玩水</div><div class="card-links"><a class="map-link" data-query="Haeundae Beach" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">11:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">♨️ Club D Oasis 汗蒸幕</div><div class="card-links"><a class="map-link" data-query="Club D Oasis Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">15:00</div><div class="timeline-content"><div class="mobile-card cat-logistics"><div class="card-title">🏨 Hotel Check-in (西面)</div><div class="card-links"><a class="map-link" data-query="Seomyeon Station Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">16:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥩 味贊王鹽烤肉 (西面)</div><div class="card-links"><a class="map-link" data-query="맛찬들왕소금구이 서면점" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">18:00</div><div class="timeline-content"><div class="mobile-card cat-shop"><div class="card-title">🛍️ 西面地下街 Shopping</div><div class="card-links"><a class="map-link" data-query="Seomyeon Underground Shopping Center" target="_blank">📍 載入中...</a></div></div></div></div>
 </div>
-<div class="timeline-item">
-<div class="timeline-time">09:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="自然鹽麵包" src="images/自然鹽麵包.jpg"/>
-<div class="card-title">🥐 自然鹽麵包</div>
-<div class="card-links"><a class="map-link" data-query="Natural Salt Bread, Haeundae, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">10:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="沙灘玩水" src="images/沙灘玩水.jpg"/>
-<div class="card-title">🏖️ 海雲台沙灘玩水</div>
-<div class="card-links"><a class="map-link" data-query="Haeundae Beach, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">11:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-logistics" style="margin-bottom:8px;">
-<img alt="Check-out" src="images/Hotel Check-out (海雲台).jpg"/>
-<div class="card-title">🧳 Check-out (Stay Black, Stay Alive)</div>
-<div class="card-links"><a class="map-link" data-query="Stay Black, Stay Alive, 16F The Time Haeundae, 322 Haeundaehaebyeon-ro, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-<div class="mobile-card cat-spot">
-<img alt="Club D Oasis" src="images/汗蒸幕 (Club D Oasis).jpg"/>
-<div class="card-title">♨️ Club D Oasis 汗蒸幕</div>
-<div class="card-links"><a class="map-link" data-query="Club D Oasis, 30 Dalmaji-gil, Haeundae-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">15:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-logistics">
-<img alt="Check-in" src="images/Hotel Check-in (西面).jpg"/>
-<div class="card-title">🏨 Hotel Check-in (西面)</div>
-<div class="card-links"><a class="map-link" data-query="Seomyeon Station, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">16:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="味贊王" src="images/味贊王 (韓式燒烤).jpg"/>
-<div class="card-title">🥩 味贊王鹽烤肉 (西面)</div>
-<div class="card-links"><a class="map-link" data-query="맛찬들왕소금구이 서면점, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">18:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-shop">
-<img alt="西面 Shopping" src="images/西面 Shopping.jpg"/>
-<div class="card-title">🛍️ 西面地下街 Shopping</div>
-<div class="card-links"><a class="map-link" data-query="Seomyeon Underground Shopping Center, 737 Jungang-daero, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Day 4 -->
 <div class="day-schedule" id="day-4">
-<div class="day-header">
-<span>Day 4 (8/26 三)</span>
-<span class="region-tag">西面</span>
+<div class="day-header"><span>Day 4 (8/26 三)</span><span class="region-tag">西面 / 松島</span></div>
+<div class="timeline-item"><div class="timeline-time">09:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥪 EGG DROP (西面樂天店)</div><div class="card-links"><a class="map-link" data-query="Egg Drop Seomyeon" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">10:00</div><div class="timeline-content"><div class="mobile-card cat-shop"><div class="card-title">👘 哲秀和英熙韓服店</div><div class="card-links"><a class="map-link" data-query="철수와영희 한복" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">11:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🎨 甘川洞文化村</div><div class="card-links"><a class="map-link" data-query="Gamcheon Culture Village" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">12:00</div><div class="timeline-content"><div class="mobile-card cat-shop"><div class="card-title">📖 釜山手翻書</div><div class="card-links"><a class="map-link" data-query="Busan flip book studio" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">14:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🦪 海底貝殼王國 (松島)</div><div class="card-links"><a class="map-link" data-query="해저조개왕국 Songdo Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">16:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">☕ EL16.52 海景咖啡廳</div><div class="card-links"><a class="map-link" data-query="EL16.52 Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">17:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🚡 松島海上纜車</div><div class="card-links"><a class="map-link" data-query="Songdo Cable Car Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">19:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥩 83獬豸 (西面總店)</div><div class="card-links"><a class="map-link" data-query="83해치 Seomyeon" target="_blank">📍 載入中...</a></div></div></div></div>
 </div>
-<div class="timeline-item">
-<div class="timeline-time">09:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food" style="margin-bottom:8px;">
-<img alt="EGG DROP" src="images/Breakfast EGG DROP (西面樂天後門店).jpg"/>
-<div class="card-title">🥪 EGG DROP (西面樂天店)</div>
-<div class="card-links"><a class="map-link" data-query="Egg Drop Seomyeon Lotte Rear Gate Branch, 12 Bujeon-ro 66beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">10:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-shop">
-<img alt="韓服體驗" src="images/韓服體驗.jpg"/>
-<div class="card-title">👘 哲秀和英熙韓服店</div>
-<div class="card-links"><a class="map-link" data-query="철수와영희 한복, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">11:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="甘川洞文化村" src="images/甘川洞文化村.jpg"/>
-<div class="card-title">🎨 甘川洞文化村</div>
-<div class="card-links"><a class="map-link" data-query="Gamcheon Culture Village, 203 Gamnae 2-ro, Saha-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">12:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-shop">
-<img alt="手翻書" src="images/手翻書.jpg"/>
-<div class="card-title">📖 釜山手翻書</div>
-<div class="card-links"><a class="map-link" data-query="Busan flip book studio, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">13:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-logistics">
-<img alt="Take Uber 15min" src="images/Uber.jpg"/>
-<div class="card-title">🚕 搭乘 Uber 移動 (約15分鐘)</div>
-<div class="card-links"><span>🚕 Uber 移動（此項不需要地圖定位）</span></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">14:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="海底貝殼王國" src="images/海底貝殼王國（松島）.jpg"/>
-<div class="card-title">🦪 海底貝殼王國 (松島)</div>
-<div class="card-links"><a class="map-link" data-query="해저조개왕국, Songdo, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">16:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="EL16.52" src="images/EL16.52 海景咖啡廳.jpg"/>
-<div class="card-title">☕ EL16.52 海景咖啡廳</div>
-<div class="card-links"><a class="map-link" data-query="EL16.52, 177 Amnamgongwon-ro, Seo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">17:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="松島纜車" src="images/松島海上纜車.jpg"/>
-<div class="card-title">🚡 松島海上纜車</div>
-<div class="card-links"><a class="map-link" data-query="Busan Air Cruise Songdo Cable Car, 171 Amnamgongwon-ro, Seo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">19:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="83獬豸" src="images/83獬豸.jpg"/>
-<div class="card-title">🥩 83獬豸 (西面總店)</div>
-<div class="card-links"><a class="map-link" data-query="83해치 광안리점, 59 Millakbondong-ro 19beon-gil, Suyeong-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Day 5 -->
 <div class="day-schedule" id="day-5">
-<div class="day-header">
-<span>Day 5 (8/27 四)</span>
-<span class="region-tag">影島 / 南浦</span>
+<div class="day-header"><span>Day 5 (8/27 四)</span><span class="region-tag">影島 / 南浦</span></div>
+<div class="timeline-item"><div class="timeline-time">09:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍲 松亭3代豬肉湯飯 / 秀英本家</div><div class="card-links"><a class="map-link" data-query="Songjeong 3 Dae Gukbap" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">10:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🖼️ ARTE MUSEUM</div><div class="card-links"><a class="map-link" data-query="Arte Museum Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">12:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍔 Burger Yo</div><div class="card-links"><a class="map-link" data-query="Burger Yo Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">13:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">☕ P.ARK Cafe & Bakery</div><div class="card-links"><a class="map-link" data-query="P.ARK Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">15:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🌊 白淺灘文化村</div><div class="card-links"><a class="map-link" data-query="Huinnyeoul Culture Village" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">16:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">☕ Miffy Cafe</div><div class="card-links"><a class="map-link" data-query="Miffy Cafe Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">17:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍲 明星一隻雞</div><div class="card-links"><a class="map-link" data-query="Myeongdong Dakhanmari Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">19:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🗼 釜山塔 (龍頭山公園)</div><div class="card-links"><a class="map-link" data-query="Busan Tower" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">20:00</div><div class="timeline-content"><div class="mobile-card cat-shop"><div class="card-title">🛍️ 樂天百貨 / 超市 (光復店)</div><div class="card-links"><a class="map-link" data-query="Lotte Department Store Gwangbok" target="_blank">📍 載入中...</a></div></div></div></div>
 </div>
-<div class="timeline-item">
-<div class="timeline-time">09:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="松亭3代豬肉湯飯" src="images/松亭3代豬肉湯飯.jpg"/>
-<div class="card-title">🍲 松亭3代豬肉湯飯</div>
-<div class="card-links"><a class="map-link" data-query="Songjeong 3 Dae Gukbap, 33 Seomyeon-ro 68beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-<div class="mobile-card cat-food">
-<img alt="秀英本家" src="images/秀英本家.jpg"/>
-<div class="card-title">🍲 秀英本家</div>
-<div class="card-links"><a class="map-link" data-query="수영본가, Suyeong-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">10:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="ARTE MUSEUM" src="images/ARTE MUSEUM Busan.jpg"/>
-<div class="card-title">🖼️ ARTE MUSEUM</div>
-<div class="card-links"><a class="map-link" data-query="Arte Museum Busan, 29 Haeyang-ro 247beon-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">12:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="Burger Yo" src="images/Burger Yo.jpg"/>
-<div class="card-title">🍔 Burger Yo</div>
-<div class="card-links"><a class="map-link" data-query="Burger Yo, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">13:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="釜山影島P.ARK Cafe & Bakery" src="images/P.ARK Cafe.jpg"/>
-<div class="card-title">☕ 釜山影島P.ARK Cafe & Bakery</div>
-<div class="card-links"><a class="map-link" data-query="P.ARK, 180 Haeyang-ro 195beon-gil, Yeongdo-gu, Busan" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">15:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="白淺灘文化村" src="images/白淺灘文化村.jpg"/>
-<div class="card-title">🌊 白淺灘文化村</div>
-<div class="card-links"><a class="map-link" data-query="Huinnyeoul Culture Village, 379 Huinnyeoul-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">16:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="Miffy Cafe Busan(Mipi) in 影島" src="images/Miffy Cafe Busan(Mipi) in 影島.jpg"/>
-<div class="card-title">☕ Miffy Cafe</div>
-<div class="card-links"><a class="map-link" data-query="Miffy Cafe Busan, 2 Wachi-ro 51beon-gil, Yeongdo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">17:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="明星一隻雞 in 影島" src="images/明星一隻雞 in 影島.jpg"/>
-<div class="card-title">🍲 明星一隻雞</div>
-<div class="card-links"><a class="map-link" data-query="Myeongdong Dakhanmari / chicken restaurant, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">19:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot">
-<img alt="釜山塔 (龍頭山公園)" src="images/釜山塔 (龍頭山公園).jpg"/>
-<div class="card-title">🗼 釜山塔 (龍頭山公園)</div>
-<div class="card-links"><a class="map-link" data-query="Busan Tower, Yongdusan Park, 37-55 Yongdusan-gil, Jung-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">20:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-shop">
-<img alt="樂天百貨" src="images/樂天百貨.jpg"/>
-<div class="card-title">🛍️ 樂天百貨 (光復店)</div>
-<div class="card-links"><a class="map-link" data-query="Lotte Department Store Gwangbok, 2 Jungang-daero, Jung-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Day 6 -->
 <div class="day-schedule" id="day-6">
-<div class="day-header">
-<span>Day 6 (8/28 五)</span>
-<span class="region-tag">返程</span>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">09:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="Your Type" src="images/Brunch (Your Type Jeonpo).jpg"/>
-<div class="card-title">🍳 Your Type 早午餐</div>
-<div class="card-links"><a class="map-link" data-query="Your Type Jeonpo, 33 Dongsung-ro 15beon-gil, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">11:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="OLD MONT Bagel" src="images/The OLD MONT Bagel.jpg"/>
-<div class="card-title">🥯 OLD MONT Bagel</div>
-<div class="card-links"><a class="map-link" data-query="OLD MONT BAGEL Busan, 58 Dongcheon-ro, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">12:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-food">
-<img alt="三五亭人蔘雞湯" src="images/人蔘雞湯.jpg"/>
-<div class="card-title">🍲 三五亭人蔘雞湯</div>
-<div class="card-links"><a class="map-link" data-query="Samohjeong Samgyetang, Seomyeon, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-time">15:00</div>
-<div class="timeline-content">
-<div class="mobile-card cat-spot" style="margin-bottom:8px;">
-<img alt="Running Man" src="images/Running Man.jpg"/>
-<div class="card-title">🏃 Running Man 體驗館 (釜山店)</div>
-<div class="card-links"><a class="map-link" data-query="Running Man Busan, 10F Samjung Tower, 672 Jungang-daero, Busanjin-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-<div class="mobile-card cat-logistics">
-<img alt="金海機場" src="images/釜山機場.jpg"/>
-<div class="card-title">🛬 抵達金海國際機場</div>
-<div class="card-links"><a class="map-link" data-query="Gimhae International Airport, 108 Gonghangjinip-ro, Gangseo-gu, Busan, South Korea" target="_blank">📍 載入中...</a></div>
-</div>
-</div>
-</div>
+<div class="day-header"><span>Day 6 (8/28 五)</span><span class="region-tag">返程</span></div>
+<div class="timeline-item"><div class="timeline-time">09:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍳 Your Type 早午餐</div><div class="card-links"><a class="map-link" data-query="Your Type Jeonpo" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">11:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🥯 OLD MONT Bagel</div><div class="card-links"><a class="map-link" data-query="OLD MONT BAGEL Busan" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">12:00</div><div class="timeline-content"><div class="mobile-card cat-food"><div class="card-title">🍲 三五亭人蔘雞湯</div><div class="card-links"><a class="map-link" data-query="Samohjeong Samgyetang Seomyeon" target="_blank">📍 載入中...</a></div></div></div></div>
+<div class="timeline-item"><div class="timeline-time">15:00</div><div class="timeline-content"><div class="mobile-card cat-spot"><div class="card-title">🏃 Running Man 體驗館</div><div class="card-links"><a class="map-link" data-query="Running Man Busan" target="_blank">📍 載入中...</a></div></div></div></div>
 </div>
 </div>
 
-<!-- ===== 3. 自訂 Q 版底圖、景點標記與手機即時 GPS 定位地圖 ===== -->
-<div class="section-title">🗺️ 釜山行程全景點與路線圖</div>
-<div class="busan-map-container" id="busanMapRegion">
-  <!-- 自訂 Q 版底圖 -->
-  <img src="https://ym7226st95g001-ux.github.io/web/Y2026_Busan/images/ChatGPT%20Image%202026%E5%B9%B48%E6%9C%8820%E6%97%A5%20%E4%B8%8A%E5%8D%8812_09_17.png" alt="釜山行程地圖" class="busan-map-bg">
+<!-- ===== 3. 指定圖片底圖 + Day1~Day6 色彩景點標註 ===== -->
+<div class="section-title">🗺️ 釜山自由行景點導覽圖 (Day1~Day6 顏色標示)</div>
+<div class="custom-map-container">
+    <div class="custom-map-wrapper">
+        <!-- 指定底圖圖片 -->
+        <img class="bg-map-img" alt="釜山旅遊地圖底圖" src="https://ym7226st95g001-ux.github.io/web/Y2026_Busan/images/ChatGPT%20Image%202026%E5%B9%B48%E6%9C%8820%E6%97%A5%20%E4%B8%8A%E5%8D%8812_09_17.png"/>
 
-  <!-- 景點標記點 -->
-  <div class="map-marker" style="left: 28%; top: 68%;"><div class="marker-icon"></div><div class="marker-label">南浦洞 / 扎嘎其</div></div>
-  <div class="map-marker" style="left: 45%; top: 52%;"><div class="marker-icon"></div><div class="marker-label">西面商圈</div></div>
-  <div class="map-marker" style="left: 68%; top: 58%;"><div class="marker-icon"></div><div class="marker-label">廣安里海灘</div></div>
-  <div class="map-marker" style="left: 82%; top: 46%;"><div class="marker-icon"></div><div class="marker-label">海雲台海灘</div></div>
-  <div class="map-marker" style="left: 88%; top: 32%;"><div class="marker-icon"></div><div class="marker-label">海東龍宮寺</div></div>
+        <!-- Day 1 標籤 (🔴 紅色) -->
+        <div class="map-pin pin-d1" style="top: 35%; left: 12%;"><span class="pin-icon">🛫</span>D1 金海機場</div>
+        <div class="map-pin pin-d1" style="top: 48%; left: 63%;"><span class="pin-icon">🏨</span>D1 海雲台住宿</div>
+        <div class="map-pin pin-d1" style="top: 54%; left: 58%;"><span class="pin-icon">🌃</span>D1 The Bay 101</div>
 
-  <!-- 我的定位標籤 -->
-  <div id="userMarker" class="user-location-marker">
-    <div class="user-dot"></div>
-    <div class="user-label">我的位置</div>
-  </div>
+        <!-- Day 2 標籤 (🔵 藍色) -->
+        <div class="map-pin pin-d2" style="top: 44%; left: 68%;"><span class="pin-icon">🚃</span>D2 海岸/膠囊列車</div>
+        <div class="map-pin pin-d2" style="top: 40%; left: 74%;"><span class="pin-icon">☕</span>D2 青沙浦</div>
+        <div class="map-pin pin-d2" style="top: 25%; left: 82%;"><span class="pin-icon">🏎️</span>D2 Skyline Luge</div>
+        <div class="map-pin pin-d2" style="top: 20%; left: 87%;"><span class="pin-icon">⛩️</span>D2 海東龍宮寺</div>
+        <div class="map-pin pin-d2" style="top: 51%; left: 66%;"><span class="pin-icon">🏙️</span>D2 BUSAN X the SKY</div>
+        <div class="map-pin pin-d2" style="top: 59%; left: 52%;"><span class="pin-icon">⛵</span>D2 鑽石遊艇</div>
+
+        <!-- Day 3 標籤 (🟢 綠色) -->
+        <div class="map-pin pin-d3" style="top: 49%; left: 64%;"><span class="pin-icon">🏖️</span>D3 海雲台沙灘</div>
+        <div class="map-pin pin-d3" style="top: 52%; left: 68%;"><span class="pin-icon">♨️</span>D3 Club D Oasis</div>
+        <div class="map-pin pin-d3" style="top: 41%; left: 33%;"><span class="pin-icon">🥩</span>D3 西面味贊王</div>
+        <div class="map-pin pin-d3" style="top: 44%; left: 35%;"><span class="pin-icon">🛍️</span>D3 西面地下街</div>
+
+        <!-- Day 4 標籤 (🟡 橘黃色) -->
+        <div class="map-pin pin-d4" style="top: 39%; left: 34%;"><span class="pin-icon">🥪</span>D4 西面EGG DROP</div>
+        <div class="map-pin pin-d4" style="top: 67%; left: 26%;"><span class="pin-icon">🎨</span>D4 甘川洞文化村</div>
+        <div class="map-pin pin-d4" style="top: 78%; left: 28%;"><span class="pin-icon">🦪</span>D4 海底貝殼王國</div>
+        <div class="map-pin pin-d4" style="top: 83%; left: 31%;"><span class="pin-icon">🚡</span>D4 松島海上纜車</div>
+
+        <!-- Day 5 標籤 (🟣 紫色) -->
+        <div class="map-pin pin-d5" style="top: 72%; left: 39%;"><span class="pin-icon">🖼️</span>D5 ARTE MUSEUM</div>
+        <div class="map-pin pin-d5" style="top: 76%; left: 42%;"><span class="pin-icon">☕</span>D5 P.ARK Cafe</div>
+        <div class="map-pin pin-d5" style="top: 80%; left: 36%;"><span class="pin-icon">🌊</span>D5 白淺灘文化村</div>
+        <div class="map-pin pin-d5" style="top: 65%; left: 33%;"><span class="pin-icon">🗼</span>D5 釜山塔/樂天</div>
+
+        <!-- Day 6 標籤 (🌸 粉色) -->
+        <div class="map-pin pin-d6" style="top: 42%; left: 37%;"><span class="pin-icon">🍳</span>D6 田浦Your Type</div>
+        <div class="map-pin pin-d6" style="top: 45%; left: 33%;"><span class="pin-icon">🏃</span>D6 Running Man</div>
+    </div>
+
+    <!-- 每日行程路線摘要卡片 -->
+    <div class="day-route-list">
+        <div class="day-route-card" style="border-left-color: var(--day1-color);">
+            <h4><span>🔴 Day 1 路線景點</span><span style="color:var(--day1-color);">海雲台區</span></h4>
+            <p>桃園機場 ➔ 金海機場 ➔ 海雲台 Check-in ➔ 廣安木 ➔ The Bay 101 ➔ 海雲台 E-mart</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day2-color);">
+            <h4><span>🔵 Day 2 路線景點</span><span style="color:var(--day2-color);">東海岸/機張區</span></h4>
+            <p>大海鮑魚粥 ➔ 海岸列車 (尾浦➔松亭) ➔ Skyline Luge ➔ 海東龍宮寺 ➔ 31公分海鮮刀切麵 ➔ 青沙浦平交道 & Cafe ➔ 天空膠囊列車 ➔ BUSAN X the SKY ➔ 海雲台傳統市場 ➔ 鑽石遊艇 ➔ Daiso</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day3-color);">
+            <h4><span>🟢 Day 3 路線景點</span><span style="color:var(--day3-color);">海雲台➔西面</span></h4>
+            <p>自然鹽麵包 ➔ 海雲台沙灘 ➔ Club D Oasis 汗蒸幕 ➔ 西面 Hotel Check-in ➔ 味贊王鹽烤肉 ➔ 西面地下街</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day4-color);">
+            <h4><span>🟡 Day 4 路線景點</span><span style="color:var(--day4-color);">甘川洞/松島區</span></h4>
+            <p>EGG DROP ➔ 哲秀和英熙韓服 ➔ 甘川洞文化村 ➔ 釜山手翻書 ➔ 海底貝殼王國 ➔ EL16.52 咖啡 ➔ 松島海上纜車 ➔ 83獬豸 (西面)</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day5-color);">
+            <h4><span>🟣 Day 5 路線景點</span><span style="color:var(--day5-color);">影島/南浦區</span></h4>
+            <p>松亭3代/秀英本家豬肉湯飯 ➔ ARTE MUSEUM ➔ Burger Yo ➔ P.ARK Cafe ➔ 白淺灘文化村 ➔ Miffy Cafe ➔ 明星一隻雞 ➔ 釜山塔 ➔ 樂天百貨/超市</p>
+        </div>
+        <div class="day-route-card" style="border-left-color: var(--day6-color);">
+            <h4><span>🌸 Day 6 路線景點</span><span style="color:var(--day6-color);">西面/返程</span></h4>
+            <p>Your Type 早午餐 ➔ OLD MONT Bagel ➔ 三五亭人蔘雞湯 ➔ Running Man 體驗館 ➔ 金海國際機場</p>
+        </div>
+    </div>
 </div>
 
 <script>
-        // 切換地圖的核心邏輯
         function setMapProvider(provider) {
             const btnGmap = document.getElementById('btn-gmap');
             const btnAmap = document.getElementById('btn-amap');
@@ -1289,7 +872,6 @@
             }
         }
 
-        // 總表對應天數欄位高亮連動函式
         function highlightSummaryColumn(dayNum) {
             const table = document.querySelector('.schedule-table');
             if (!table) return;
@@ -1307,7 +889,6 @@
             });
         }
 
-        // 日期頁籤切換
         function switchDay(dayNum) {
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach((tab, index) => {
@@ -1330,29 +911,6 @@
             highlightSummaryColumn(dayNum);
         }
 
-        // 即時 GPS 定位邏輯
-        const BUSAN_BOUNDS = { minLat: 35.050, maxLat: 35.250, minLng: 128.950, maxLng: 129.250 };
-
-        function updateUserPosition(position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-
-            if (lat >= BUSAN_BOUNDS.minLat && lat <= BUSAN_BOUNDS.maxLat &&
-                lng >= BUSAN_BOUNDS.minLng && lng <= BUSAN_BOUNDS.maxLng) {
-                
-                const leftPercent = ((lng - BUSAN_BOUNDS.minLng) / (BUSAN_BOUNDS.maxLng - BUSAN_BOUNDS.minLng)) * 100;
-                const topPercent = (1 - ((lat - BUSAN_BOUNDS.minLat) / (BUSAN_BOUNDS.maxLat - BUSAN_BOUNDS.minLat))) * 100;
-
-                const userMarker = document.getElementById('userMarker');
-                if (userMarker) {
-                    userMarker.style.left = leftPercent + '%';
-                    userMarker.style.top = topPercent + '%';
-                    userMarker.style.display = 'flex';
-                }
-            }
-        }
-
-        // 初始化與滑動監聽
         document.addEventListener('DOMContentLoaded', () => {
             setMapProvider('gmap');
             highlightSummaryColumn(1);
@@ -1380,11 +938,7 @@
                     }, 50);
                 });
             }
-
-            if ("geolocation" in navigator) {
-                navigator.geolocation.watchPosition(updateUserPosition, null, { enableHighAccuracy: true });
-            }
         });
-    </script>
+</script>
 </body>
 </html>
